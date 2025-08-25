@@ -1,0 +1,79 @@
+/* General resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Corbel, sans-serif;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/* Header bar */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #e0e0e0;
+  position: relative;
+}
+
+.home-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+
+/* Main content layout */
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  grid-template-rows: repeat(2, 200px);
+  gap: 20px;
+  justify-content:center;
+  align-items: center;
+  margin: 50px,50px;
+  position: relative;
+}
+
+/* All the button styling */
+.subject-btn, .random-btn {
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.subject-btn {
+  background: #dcdcdc;
+  padding: 40px;
+}
+
+.subject-btn:hover {
+  background: #c0c0c0;
+}
+
+.random-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #b0b0b0;
+  padding: 30px 50px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.random-btn:hover {
+  background: #909090;
+}
