@@ -1,0 +1,112 @@
+/* General resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  flex: 1; /* this expands to push footer down */
+}
+
+body {
+  font-family: Corbel, sans-serif;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header bar */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #e0e0e0;
+  position: relative;
+}
+
+.home-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Account page styling */
+.info-section {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* make left column wider */
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+.username-btn {
+  grid-column: 1 / 2; /* still span across both columns */
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  text-align: left; /* align text to the left */
+  width: 70%; /* take up the full grid width */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: lowercase;
+  justify-self: start; /* anchor left */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0; /* cleaner margin (your `margin: 100px, 100px;` was invalid) */
+}
+
+.stats-box,
+.image-box {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stats-box {
+  grid-column: 1 / 2; /* stays left */
+  justify-self: start; /* nudge left */
+  width: 85%; /* control width */
+}
+
+.image-box {
+  grid-column: 2 / 3; /* right column */
+  align-self: stretch; /* make it fill vertical space */
+  min-height: 280px; /* taller */
+  width: 95%; /* shift closer to right edge */
+  justify-self: end;
+}
+
+/* Footer buttons */
+.footer-button {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+  margin-top: auto; /* pushes footer to bottom */
+}
+.footer-button button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+}
+
+.footer-button button:hover {
+  background: #dcdcdc;
+}
