@@ -13,7 +13,14 @@ async function show (req, res) {
 async function getBySubjectCat (req, res) {
     try {
         let subjectCat = req.params.subjectCat
-        const questions = await Questions.getBySubjectCat(subjectCat)
+        let questions
+
+        if (subjectCat === 'RAN') {
+            questions = await Questions.getRandomQuestions()
+        } else {
+            questions = await Questions.getBySubjectCat(subjectCat)
+        }
+
         res.status(200).json(questions)
     } catch(err) {
         res.status(404).json({ error: err.message })
