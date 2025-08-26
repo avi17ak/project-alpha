@@ -17,7 +17,7 @@ optionButtons.forEach(button => {
     const category = button.getAttribute('data-category');
     try {
       //fwtch questions for cat
-      const response = await fetch(`/questions/subject/${category}`);
+      const response = await fetch(`http://localhost:3000/questions/subject/${category}`);
       const questions = await response.json();
 
       // clear previous question
