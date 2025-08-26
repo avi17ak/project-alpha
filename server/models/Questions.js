@@ -21,10 +21,6 @@ class Questions {
         }
     }
 
-    // static async getBySubjectCat(subjectCat) {
-    //     const response = await db.query(`SELECT * FROM questions WHERE subjectCat = $1 ORDER BY questionId;`, [subjectCat])
-    // }
-
     static async getBySubjectCat(subjectcat, count = 10) {
         const { rows } = await db.query(`SELECT * FROM questions WHERE subjectcat = $1 ORDER BY random() LIMIT $2;`,[subjectcat, count]);
         if (rows.length == 0) {
@@ -42,8 +38,6 @@ class Questions {
             return rows.map(question => new Questions(question))
         }
     }
-
-
 }
 
 module.exports = Questions
