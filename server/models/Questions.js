@@ -30,6 +30,15 @@ class Questions {
         }
     }
 
+    static async getRandomQuestions(count = 10) {
+        const { rows } = await db.query(`SELECT * FROM questions ORDER BY random() LIMIT $1;`,[count]);
+        if (rows.length == 0) {
+            throw new Error("No questions found for this category.")
+        } else {
+            return rows.map(question => new Questions(question))
+        }
+    }
+
     static async getByDifficulty(difficulty, count = 10) {
         const { rows } = await db.query(`SELECT * FROM questions WHERE difficulty = $1 ORDER BY random() LIMIT $2;`,[difficulty, count]);
         if (rows.length == 0) {
