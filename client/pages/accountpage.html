@@ -12,13 +12,17 @@
       crossorigin="anonymous"
     />
     <!-- Our css for buttons etc -->
-    <link rel="stylesheet" href="../styles/homepage.css" />
+    <link rel="stylesheet" href="../styles/accountpage.css" />
   </head>
+
+
+
+
   <body>
     
     <!-- Header with dropdown -->
     <header
-      class="top-bar d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow-sm"
+      class="top-bar d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow-sm";
     >
       <!-- Home Icon -->
       <div class="home-icon">
@@ -38,7 +42,7 @@
         </svg>
       </div>
       <!-- Title  -->
-      <h1 class="m-0">Homepage</h1>
+      <h1 class="m-0">Account Page</h1>
 
       <!-- User Dropdown Menu -->
       <div class="dropdown">
@@ -71,22 +75,37 @@
           <li><a class="dropdown-item" href="index.html">Log out</a></li>
         </ul>
       </div>
-    </header>
+    </header>  
 
-    <main class="content">
-<!-- All the buttons -->
-      <button class="subject-btn">Geography</button>
-      <button class="subject-btn">History</button>
-      <button class="subject-btn">Art</button>
-      <button class="subject-btn">Music</button>
-      <button class="random-btn">Random</button>
+    <!-- Username -->
+    <div class="username-btn">username</div>
+
+    <!-- Info and Image section -->
+    <div class="info-section">
+      <div class="stats-box">Stats and Information</div>
+      <div class="image-box">Image</div>
+    </div>
+
+    <!-- Bottom row of buttons -->
+    <div class="footer-button">
+      <button>Change Password</button>
+      <button>Change Username</button>
+      <button>Change Email</button>
+      <button>Log out</button>
+    </div>
+  </div>
+
+  
 
 
-    </main>
 
 
     <!-- Connections to bootstrap js and our js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/index.js"></script>
   </body>
+
+
+
+
 </html>
