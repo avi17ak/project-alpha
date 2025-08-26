@@ -32,13 +32,28 @@ body {
 /* Main content layout- i.e. the grid of subject buttons and how far apart they are  */
 .content {
   display: grid;
-  grid-template-columns: repeat(2, 245px);
-  grid-template-rows: repeat(2, 245px);
-  gap: 25px;
-  justify-content: center;
-  align-items: center;
-  margin: 50px, 50px;
-  position: relative;
+  grid-template-columns: repeat(2, 1fr);  /* split evenly into 2 columns */
+  grid-template-rows: repeat(2, 1fr);     /* split evenly into 2 rows */
+  gap: 55px;
+  width: 80vw;   /* take up most of the screen width */
+  height: 70vh;  /* take up most of the screen height */
+  margin: 40px;
+}
+
+/* Subject buttons scale with grid cells */
+.subject-btn {
+  background: #dcdcdc;
+  border: none;
+  border-radius: 12px;
+  font-size: 2rem;    /* scale up text */
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;        /* fill grid cell */
+  height: 100%;       /* fill grid cell */
+}
+
+.subject-btn:hover {
+  background: #c0c0c0;
 }
 
 /* All the button styling */
@@ -46,19 +61,10 @@ body {
 .random-btn {
   border: none;
   border-radius: 12px;
-  font-size: 1rem;
+  font-size: 2rem;
   cursor: pointer;
   transition: background 0.3s;
   justify-content: space-between;
-}
-
-.subject-btn {
-  background: #dcdcdc;
-  padding: 40px;
-}
-
-.subject-btn:hover {
-  background: #c0c0c0;
 }
 
 .random-btn {
@@ -67,11 +73,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #b0b0b0;
-  width: 180px; 
-  height: 120px; 
-  border-radius: 55%; /* how circular the button is */
+  width: 240px; 
+  height: 189px; 
+  border-radius: 75%; /* how circular the button is */
   font-weight: bold;
-  font-size: 1.2rem; /* make text larger */
+  font-size: 1.5rem; /* make text larger */
   display: flex; /* center text inside */
   justify-content: center;
   align-items: center;

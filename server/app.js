@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/user', userRouter)
-app.use('/userstats', userStatsRouter)
+//app.use('/userstats', userStatsRouter)
 app.use('/questions', questionsRouter)
 
 module.exports = app
