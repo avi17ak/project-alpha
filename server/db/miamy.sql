@@ -1,12 +1,10 @@
-DROP TABLE IF EXISTS users;
-
-DROP TABLE IF EXISTS userStats;
-
-DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS userStats CASCADE;
+DROP TABLE IF EXISTS questions CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE
     users (
-        userId INT GENERATED ALWAYS AS IDENTITY,
+        userid INT GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
@@ -16,27 +14,27 @@ CREATE TABLE
 
 CREATE TABLE
     userStats (
-        userStatsId INT GENERATED ALWAYS AS IDENTITY,
-        userId INT,
-        overallPct DECIMAL(4, 2) DEFAULT 0,
-        geographyCorrect INT DEFAULT 0,
-        musicCorrect INT DEFAULT 0,
-        historyCorrect INT DEFAULT 0,
-        spanishCorrect INT DEFAULT 0,
-        totalQuizzes INT DEFAULT 0,
-        totalTime INT DEFAULT 0,
-        PRIMARY KEY (userStatsId),
-        FOREIGN KEY (userId) REFERENCES users(userId)
+        userstatsid INT GENERATED ALWAYS AS IDENTITY,
+        userid INT,
+        overallpercentage DECIMAL(4, 2) DEFAULT 0,
+        geographycorrect INT DEFAULT 0,
+        musiccorrect INT DEFAULT 0,
+        historycorrect INT DEFAULT 0,
+        spanishcorrect INT DEFAULT 0,
+        totalquizzes INT DEFAULT 0,
+        totaltime INT DEFAULT 0,
+        PRIMARY KEY (userstatsid),
+        FOREIGN KEY (userid) REFERENCES users(userid) -- change column names to lowercase otherwise ERROR
     );
 
 CREATE TABLE
     questions (
-        questionId INT GENERATED ALWAYS AS IDENTITY,
+        questionid INT GENERATED ALWAYS AS IDENTITY,
         question VARCHAR(255) NOT NULL,
         answer VARCHAR(255) NOT NULL,
-        optionOne VARCHAR(255) NOT NULL,
-        optionTwo VARCHAR(255) NOT NULL,
-        optionThree VARCHAR(255) NOT NULL,
-        subjectCat VARCHAR(3) NOT NULL, --spa, geo, mus, his
+        optionone VARCHAR(255) NOT NULL,
+        optiontwo VARCHAR(255) NOT NULL,
+        optionthree VARCHAR(255) NOT NULL,
+        subjectcat VARCHAR(3) NOT NULL, --spa, geo, mus, his
         difficulty INT NOT NULL -- 1(easy), 2(mid), 3(hard)
     );
