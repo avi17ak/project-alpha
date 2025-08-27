@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("📡 Fetching questions for category:", category);
 
       const resp = await fetch(
-        `http://localhost:3000/questions/subject/${(category)}`
+        `http://localhost:3000/questions/subject/${category}`
       );
 
       console.log("Response status:", resp.status);
@@ -42,8 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       questions = Array.isArray(data) ? data : data.data;
 
       if (!Array.isArray(questions) || questions.length === 0) {
-        questionContainer.textContent =
-          "No questions found for this category.";
+        questionContainer.textContent = "No questions found for this category.";
         console.warn("⚠️ No questions found in API response");
         return;
       }
@@ -58,15 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderQuestion(q) {
     if (!q) {
-      console.error("⚠️ Tried to render undefined question at index:", currentIndex);
+      console.error(
+        "⚠️ Tried to render undefined question at index:",
+        currentIndex
+      );
       return;
     }
 
-    console.log("📝 Rendering question:", q);
-
     questionContainer.textContent = q.question ?? "⚠️ Missing question text";
     difficultyContainer.textContent = `Difficulty: ${q.difficulty ?? "N/A"}`;
-
 
     //Need array to shuffle options on page
     const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-//Results at end
+  //Results at end of quiz n
   function showResults() {
     questionContainer.textContent = "🎉 Quiz Finished!";
     difficultyContainer.textContent = "";
