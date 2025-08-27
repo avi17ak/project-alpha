@@ -1,4 +1,3 @@
-// fetchQuestions.js
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.location.pathname.includes("mainQuestions.html")) return;
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchQuestionData(category);
 
-  // --- Fetch all questions ---
   async function fetchQuestionData(category) {
     try {
       console.log("📡 Fetching questions for category:", category);
@@ -75,49 +73,54 @@ document.addEventListener("DOMContentLoaded", () => {
     questionContainer.textContent = q.question ?? "⚠️ Missing question text";
     difficultyContainer.textContent = `Difficulty: ${q.difficulty ?? "N/A"}`;
 
-    //Need array to shuffle options on page
     const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(
       Boolean
     );
 
     if (options.length === 0) {
-      console.warn("⚠️ No options found for question:", q);
+      console.error("⚠️ No options found for question:", q);
       contentContainer.innerHTML = "<p>No options available</p>";
       return;
     }
 
-    // Shuffle
     options.sort(() => Math.random() - 0.5);
 
-    // Render
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
-      btn.classList.add("option-btn", "btn", "btn-outline-primary", "m-1");
+      const answers = document.getElementsByClassName("option-btn");
+
+      btn.classList.add("option-btn", "btn-outline-primary", "btn", "m-1");
+      // "btn", "btn-outline-primary", "m-1"
       btn.textContent = opt;
 
       btn.addEventListener("click", () => {
-        checkAnswer(opt, q.answer);
+        checkAnswer(opt, q.answer, btn);
       });
 
       contentContainer.appendChild(btn);
     });
   }
 
-  function checkAnswer(selected, correct) {
+  function checkAnswer(selected, correct, btn) {
     if (selected === correct) {
       score++;
       console.log("✅ Correct! Score:", score);
+      btn.classList.remove("btn-outline-primary");
+      btn.classList.add("btn-success");
     } else {
       console.log("❌ Wrong. Correct answer was:", correct);
+      btn.classList.remove("btn-outline-primary");
+      btn.classList.add("btn-danger");
     }
-
-    currentIndex++;
-    if (currentIndex < questions.length) {
-      renderQuestion(questions[currentIndex]);
-    } else {
-      showResults();
-    }
+    setTimeout(() => {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        renderQuestion(questions[currentIndex]);
+      } else {
+        showResults();
+      }
+    }, 1000);
   }
 
   //Results at end of quiz n
