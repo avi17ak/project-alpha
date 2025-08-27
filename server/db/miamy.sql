@@ -15,7 +15,7 @@ CREATE TABLE
 CREATE TABLE
     userstats (
         userstatsid INT GENERATED ALWAYS AS IDENTITY,
-        userid INT,
+        username VARCHAR(255) NOT NULL UNIQUE,
         overallpercentage DECIMAL(4, 2) DEFAULT 0,
         geographycorrect INT DEFAULT 0,
         musiccorrect INT DEFAULT 0,
@@ -24,7 +24,7 @@ CREATE TABLE
         totalquizzes INT DEFAULT 0,
         totaltime INT DEFAULT 0,
         PRIMARY KEY (userstatsid),
-        FOREIGN KEY (userid) REFERENCES users(userid) -- change column names to lowercase otherwise ERROR
+        FOREIGN KEY (username) REFERENCES users(username) -- change column names to lowercase otherwise ERROR
     );
 
 CREATE TABLE
@@ -47,13 +47,13 @@ CREATE TABLE
 --     ('max3', 'maxshen2050@gmail.com', 'lafosse', 'max04'),
 --     ('max4', 'maxshen2059@gmail.com', 'lafosse', 'max05');
 
-INSERT INTO userstats (userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
-VALUES
-    (1, 0, 0, 0, 0, 0, 0, 0),
-    (2, 23, 23, 0, 0, 0, 10, 0),
-    (3, 75, 0, 75, 0, 0, 10, 0),
-    (4, 64, 0, 0, 128, 0, 20, 0),
-    (5, 15, 0, 0, 0, 15, 10, 0);
+-- INSERT INTO userstats (userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
+-- VALUES
+--     (1, 0, 0, 0, 0, 0, 0, 0),
+--     (2, 23, 23, 0, 0, 0, 10, 0),
+--     (3, 75, 0, 75, 0, 0, 10, 0),
+--     (4, 64, 0, 0, 128, 0, 20, 0),
+--     (5, 15, 0, 0, 0, 15, 10, 0);
 
 -- SPANISH (SPA)
 INSERT INTO questions (question, answer, optionone, optiontwo, optionthree, subjectcat, difficulty) VALUES

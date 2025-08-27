@@ -1,11 +1,19 @@
-const { Router } = require('express')
-const questionController = require('../controllers/questionsController')
-const authenticator = require('../middleware/authenticator')
+const { Router } = require("express");
+const questionController = require("../controllers/questionsController");
+const authenticator = require("../middleware/authenticator");
 
-const questionRouter = Router()
+const questionRouter = Router();
 
-questionRouter.get('/:id', questionController.show)
-questionRouter.get('/subject/:subjectCat', questionController.getBySubjectCat)
-questionRouter.get('/difficulty/:difficulty', questionController.getByDifficulty)
+questionRouter.get("/:id", authenticator, questionController.show);
+questionRouter.get(
+  "/subject/:subjectCat",
+  authenticator,
+  questionController.getBySubjectCat
+);
+questionRouter.get(
+  "/difficulty/:difficulty",
+  authenticator,
+  questionController.getByDifficulty
+);
 
-module.exports = questionRouter
+module.exports = questionRouter;

@@ -23,9 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchQuestionData(category) {
     try {
       console.log("📡 Fetching questions for category:", category);
+      const options = {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      };
+
+      console.log(`http://localhost:3000/questions/subject/${category}`);
 
       const resp = await fetch(
-        `http://localhost:3000/questions/subject/${category}`
+        `http://localhost:3000/questions/subject/${category}`,
+        options
       );
 
       console.log("Response status:", resp.status);

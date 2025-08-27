@@ -1,11 +1,12 @@
 const { Router } = require('express')
 const userStatsController = require('../controllers/userStatsController')
+const authenticator = require('../middleware/authenticator')
 
 const userStatsRouter = Router()
 
-userStatsRouter.get('/:id', userStatsController.show)
+userStatsRouter.get('/:username', authenticator, userStatsController.show)
 userStatsRouter.post('/', userStatsController.create)
-userStatsRouter.patch('/:id', userStatsController.update)
+userStatsRouter.patch('/:username', authenticator, userStatsController.update)
 
 //integrate in frontend with users table
 
