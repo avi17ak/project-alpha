@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let questions = [];
   let currentIndex = 0;
   let score = 0;
+  let userResults = [];
 
   if (!category) {
     questionContainer.textContent = "No category selected.";
@@ -103,6 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function checkAnswer(selected, correct, btn) {
+    // record this attempt
+    userResults.push({
+      index: currentIndex,
+      question: questions[currentIndex]?.question ?? "",
+      selected,
+      correct,
+      isCorrect: selected === correct
+    });
     if (selected === correct) {
       score++;
       console.log("✅ Correct! Score:", score);
@@ -125,8 +134,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Results at end of quiz n
   function showResults() {
+    // Headline
     questionContainer.textContent = "🎉 Quiz Finished!";
     difficultyContainer.textContent = "";
-    contentContainer.innerHTML = `<p>Your final score is: ${score} / ${questions.length}</p>`;
+
+    // Score summary
+    const percent = Math.round((score / questions.length) * 100);
+    const summary = document.createElement("div");
+    summary.className = "results-summary mb-3";
+    summary.innerHTML = `
+      <h2 class="h4">Your score</h2>
+      <p class="lead mb-1"><strong>${score}</strong> / ${questions.length} (${percent}%)</p>
+    `;
+
+    // Detailed breakdown
+    const list = document.createElement("ol");
+    list.className = "list-group list-group-numbered";
+
+    userResults.forEach((res, i) => {
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex flex-column align-items-start";
+      const emoji = res.isCorrect ? "✅" : "❌";
+      const answerLine = res.isCorrect
+        ? `<span class="badge text-bg-success ms-2">Correct</span>`
+        : `<span class="badge text-bg-danger ms-2">Incorrect</span>`;
+
+      li.innerHTML = `
+        <div class="w-100 d-flex justify-content-between align-items-start">
+          <div class="fw-semibold">${emoji} ${res.question}</div>
+          ${answerLine}
+        </div>
+        <div class="mt-1 small">
+          <div><strong>Your answer:</strong> ${res.selected}</div>
+          <div><strong>Correct answer:</strong> ${res.correct}</div>
+        </div>
+      `;
+      list.appendChild(li);
+    });
+
+    // Action buttons
+    const actions = document.createElement("div");
+    actions.className = "mt-3 d-flex gap-2";
+    const retryBtn = document.createElement("a");
+    retryBtn.href = window.location.pathname + window.location.search;
+    retryBtn.className = "btn btn-primary";
+    retryBtn.textContent = "Try Again";
+
+    const homeBtn = document.createElement("a");
+    homeBtn.href = "/client/pages/index.html";
+    homeBtn.className = "btn btn-outline-secondary";
+    homeBtn.textContent = "Back to Home";
+
+    actions.appendChild(retryBtn);
+    actions.appendChild(homeBtn);
+
+    // Render
+    contentContainer.innerHTML = "";
+    contentContainer.appendChild(summary);
+    contentContainer.appendChild(list);
+    contentContainer.appendChild(actions);
   }
 });
