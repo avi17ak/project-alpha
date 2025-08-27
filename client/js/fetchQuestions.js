@@ -1,3 +1,13 @@
+// --- Logout button ---
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("token"); // remove JWT
+      alert("You have been logged out.");
+      window.location.assign("index.html"); // redirect to login page
+    });
+  }
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.location.pathname.includes("mainQuestions.html")) return;
