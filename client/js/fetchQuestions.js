@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log("📡 Fetching questions for category:", category);
 
+      console.log(`http://localhost:3000/questions/subject/${category}`);
+
       const resp = await fetch(
         `http://localhost:3000/questions/subject/${category}`
       );

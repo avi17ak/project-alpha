@@ -47,13 +47,13 @@ CREATE TABLE
 --     ('max3', 'maxshen2050@gmail.com', 'lafosse', 'max04'),
 --     ('max4', 'maxshen2059@gmail.com', 'lafosse', 'max05');
 
-INSERT INTO userstats (userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
-VALUES
-    (1, 0, 0, 0, 0, 0, 0, 0),
-    (2, 23, 23, 0, 0, 0, 10, 0),
-    (3, 75, 0, 75, 0, 0, 10, 0),
-    (4, 64, 0, 0, 128, 0, 20, 0),
-    (5, 15, 0, 0, 0, 15, 10, 0);
+-- INSERT INTO userstats (userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
+-- VALUES
+--     (1, 0, 0, 0, 0, 0, 0, 0),
+--     (2, 23, 23, 0, 0, 0, 10, 0),
+--     (3, 75, 0, 75, 0, 0, 10, 0),
+--     (4, 64, 0, 0, 128, 0, 20, 0),
+--     (5, 15, 0, 0, 0, 15, 10, 0);
 
 -- SPANISH (SPA)
 INSERT INTO questions (question, answer, optionone, optiontwo, optionthree, subjectcat, difficulty) VALUES
