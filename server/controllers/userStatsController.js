@@ -13,7 +13,6 @@ async function show (req, res) {
 async function create(req, res) {
     try {
         const data = req.body
-        console.log(req);
         const newUserStats = await Userstats.createNewUserStats(data)
         res.status(201).json(newUserStats)
     } catch(err) {
