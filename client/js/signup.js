@@ -21,7 +21,22 @@ async function register_event (e){
     const response = await fetch ('http://localhost:3000/user/register', options)
 
     const data = await response.json()
-    console.log(data)
+
+    const userStatsOptions = {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: form.get('username')
+        })
+    }
+    console.log(form.get('username'));
+    const userStatsResponse = await fetch('http://localhost:3000/userstats', userStatsOptions)
+
+    const userStatsData = await userStatsResponse.json()
+
 
     if (response.status === 201){
         window.location.assign('index.html')
