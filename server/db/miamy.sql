@@ -39,21 +39,21 @@ CREATE TABLE
         difficulty INT NOT NULL -- 1(easy), 2(mid), 3(hard)
     );
 
--- INSERT INTO users (name, email, password, username) 
--- VALUES
---     ('max', 'maxshen2053@gmail.com', 'lafosse', 'max01'),
---     ('max1', 'maxshen2052@gmail.com', 'lafosse', 'max02'),
---     ('max2', 'maxshen2051@gmail.com', 'lafosse', 'max03'),
---     ('max3', 'maxshen2050@gmail.com', 'lafosse', 'max04'),
---     ('max4', 'maxshen2059@gmail.com', 'lafosse', 'max05');
+INSERT INTO users (name, email, password, username) 
+VALUES
+    ('max01', 'maxshen2053@gmail.com', 'lafosse', 'max01'),
+    ('max02', 'maxshen2052@gmail.com', 'lafosse', 'max02'),
+    ('max03', 'maxshen2051@gmail.com', 'lafosse', 'max03'),
+    ('max04', 'maxshen2050@gmail.com', 'lafosse', 'max04'),
+    ('max05', 'maxshen2059@gmail.com', 'lafosse', 'max05');
 
--- INSERT INTO userstats (userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
--- VALUES
---     (1, 0, 0, 0, 0, 0, 0, 0),
---     (2, 23, 23, 0, 0, 0, 10, 0),
---     (3, 75, 0, 75, 0, 0, 10, 0),
---     (4, 64, 0, 0, 128, 0, 20, 0),
---     (5, 15, 0, 0, 0, 15, 10, 0);
+INSERT INTO userstats (username, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime)
+VALUES
+    ('max01', 0, 0, 0, 0, 0, 0, 0),
+    ('max02', 23, 23, 0, 0, 0, 10, 0),
+    ('max03', 75, 0, 75, 0, 0, 10, 0),
+    ('max04', 64, 0, 0, 128, 0, 20, 0),
+    ('max05', 15, 0, 0, 0, 15, 10, 0);
 
 -- SPANISH (SPA)
 INSERT INTO questions (question, answer, optionone, optiontwo, optionthree, subjectcat, difficulty) VALUES

@@ -4,7 +4,7 @@ const authenticator = require('../middleware/authenticator')
 
 const userStatsRouter = Router()
 
-userStatsRouter.get('/:username', authenticator, userStatsController.show)
+userStatsRouter.get('/:username', userStatsController.show)
 userStatsRouter.post('/', userStatsController.create)
 userStatsRouter.patch('/:username', authenticator, userStatsController.update)
 
