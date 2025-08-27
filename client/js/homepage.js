@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     logoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
       localStorage.removeItem("token"); // remove JWT
+      localStorage.removeItem('userid')
+      localStorage.removeItem('username')
       alert("You have been logged out.");
       window.location.assign("index.html"); // redirect to login page
     });
