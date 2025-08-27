@@ -5,8 +5,8 @@ const userStatsRouter = Router()
 
 userStatsRouter.get('/:id', userStatsController.show)
 userStatsRouter.post('/', userStatsController.create)
+userStatsRouter.patch('/:id', userStatsController.update)
 
-//make update route
 //integrate in frontend with users table
 
 //future implementation:

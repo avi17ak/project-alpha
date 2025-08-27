@@ -41,6 +41,27 @@ class Userstats {
         }
         
     }
+
+    async updateUserStats(data) {
+        const { userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime} = data
+
+        const response = await db.query(`UPDATE userstats SET
+            overallpercentage = COALESCE($2, overallpercentage),
+            geographycorrect   = geographycorrect + COALESCE($3, 0),
+            musiccorrect       = musiccorrect + COALESCE($4, 0),
+            historycorrect     = historycorrect + COALESCE($5, 0),
+            spanishcorrect     = spanishcorrect + COALESCE($6, 0),
+            totalquizzes       = totalquizzes + COALESCE($7, 0),
+            totaltime          = totaltime + COALESCE($8, 0)
+        WHERE userid = $1
+        RETURNING *;`, [userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime])
+        
+        if (response.rows.length !== 1) {
+            throw new Error('Unable to update the userstats')
+        } else {
+            return new Userstats(response.rows[0])
+        }
+    }
 }
 
 module.exports = Userstats
