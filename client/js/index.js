@@ -1,56 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.querySelector('.login_form');
 
-document.querySelector('.login_form').addEventListener('submit', async (e) =>{
-    e.preventDefault()
-    const form = new FormData(e.target)
+  if (!loginForm) {
+    console.error("Login form not found. Make sure your form has class 'login_form'.");
+    return;
+  }
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(loginForm);
+
     const options = {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: form.get('username'),
-            password: form.get('password')
-        })
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: formData.get('username'),
+        password: formData.get('password')
+      })
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/user/login', options);
+      const data = await response.json();
+      console.log("Login response:", data);
+
+      // Check that the token exists
+      if (data.token) {
+        // Save token to localStorage
+        localStorage.setItem('token', data.token);
+        console.log("Token saved to localStorage:", localStorage.getItem('token'));
+
+        // Redirect after saving
+        alert('Successfully Logged In');
+        window.location.assign("homepage.html");
+      } else {
+        alert(data.error || "Login failed: no token received");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error: " + err.message);
     }
-    const response = await fetch ('http://localhost:3000/user/login', options)
-
-    const data = await response.json()
-
-    if (response.status === 200){
-        localStorage.setItem('token', data.token)
-        window.location.assign('homepage.html')
-        alert('Successfully Logged In')
-        
-    }else{
-        alert(data.error)
-    }
-
-})
-
-
-
-
-// async function login_event (e){
-//     const form = new FormData(e.target)
-//     const options = {
-//         method: "POST",
-//         headers: {
-//             "Accept": "application/json",
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             username: form.get('username'),
-//             password: form.get('password')
-//         })
-//     }
-//     const response = await fetch ('http://localhost:3000/user/login', options)
-
-//     const data = await response.json()
-
-//     if (response.status === 200){
-//         alert('Successfully Logged In')
-//     }else{
-//         alert(data.error)
-//     }
-// }
+  });
+});
