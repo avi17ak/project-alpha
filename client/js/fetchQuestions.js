@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (options.length === 0) {
-      console.warn("⚠️ No options found for question:", q);
+      console.error("⚠️ No options found for question:", q);
       contentContainer.innerHTML = "<p>No options available</p>";
       return;
     }
@@ -85,36 +85,39 @@ document.addEventListener("DOMContentLoaded", () => {
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
-      btn.classList.add("option-btn", "btn", "btn-outline-primary", "m-1");
+      const answers = document.getElementsByClassName("option-btn");
+
+      btn.classList.add("option-btn", "btn-outline-primary", "btn", "m-1");
+      // "btn", "btn-outline-primary", "m-1"
       btn.textContent = opt;
 
       btn.addEventListener("click", () => {
-        checkAnswer(opt, q.answer);
+        checkAnswer(opt, q.answer, btn);
       });
 
       contentContainer.appendChild(btn);
     });
   }
 
-  function checkAnswer(selected, correct) {
+  function checkAnswer(selected, correct, btn) {
     if (selected === correct) {
       score++;
-      //Check answer and if it's correct then change the button to green?? or red if wrong 
-      //need to add class or id
-// correct closse has a green background if selected is correct then add a green bg 
       console.log("✅ Correct! Score:", score);
-      btn.classList.add('correct');
+      btn.classList.remove("btn-outline-primary");
+      btn.classList.add("btn-success");
     } else {
       console.log("❌ Wrong. Correct answer was:", correct);
-      btn.classList.add('incorrect');
+      btn.classList.remove("btn-outline-primary");
+      btn.classList.add("btn-danger");
     }
-
-    currentIndex++;
-    if (currentIndex < questions.length) {
-      renderQuestion(questions[currentIndex]);
-    } else {
-      showResults();
-    }
+    setTimeout(() => {
+      currentIndex++;
+      if (currentIndex < questions.length) {
+        renderQuestion(questions[currentIndex]);
+      } else {
+        showResults();
+      }
+    }, 1000);
   }
 
   //Results at end of quiz n

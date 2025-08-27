@@ -79,9 +79,14 @@ body {
   margin: auto;
 }
 
-.correct{
-  background: green;
+.correct {
+  background-color: green;
+  
 }
-.incorrect{
-  background: red;
+.incorrect {
+  background: rgb(231, 73, 73);
+}
+
+.disabled {
+pointer-events: none;
 }
