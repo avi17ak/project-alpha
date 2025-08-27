@@ -1,3 +1,4 @@
+const User = require('../models/User')
 const Userstats = require('../models/UserStats')
 
 async function show (req, res) {
@@ -20,7 +21,24 @@ async function create(req, res) {
     }
 }
 
+async function update(req, res) {
+    try {
+        const id = req.params.id
+        const data = req.body
+        console.log(data);
+        const userstats = await Userstats.getUserStatsById(id)
+
+        const result = await userstats.updateUserStats(data)
+
+        res.status(200).json(result)
+
+    } catch(err) {
+        res.status(404).json({error: err.message})
+    }
+}
+
 module.exports = {
     show,
-    create
+    create,
+    update
 }
