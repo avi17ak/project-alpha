@@ -99,9 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function checkAnswer(selected, correct) {
     if (selected === correct) {
       score++;
+      //Check answer and if it's correct then change the button to green?? or red if wrong 
+      //need to add class or id
+// correct closse has a green background if selected is correct then add a green bg 
       console.log("✅ Correct! Score:", score);
+      btn.classList.add('correct');
     } else {
       console.log("❌ Wrong. Correct answer was:", correct);
+      btn.classList.add('incorrect');
     }
 
     currentIndex++;

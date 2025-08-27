@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // homepage.js
-const categoryButtons = document.querySelectorAll('.subject-btn');
+const categoryButtons = document.querySelectorAll('.subject-btn, .random-btn');
 
 categoryButtons.forEach(button => { 
   button.addEventListener('click', () => { 

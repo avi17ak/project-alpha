@@ -78,3 +78,10 @@ body {
   height: 60vh;
   margin: auto;
 }
+
+.correct{
+  background: green;
+}
+.incorrect{
+  background: red;
+}
