@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.token) {
         // Save token to localStorage
         localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('userid', data.userid);
+        
         console.log("Token saved to localStorage:", localStorage.getItem('token'));
 
         // Redirect after saving
