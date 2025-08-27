@@ -16,6 +16,7 @@ CREATE TABLE
     userstats (
         userstatsid INT GENERATED ALWAYS AS IDENTITY,
         username VARCHAR(255) NOT NULL UNIQUE,
+        userid INT NOT NULL,
         overallpercentage DECIMAL(4, 2) DEFAULT 0,
         geographycorrect INT DEFAULT 0,
         musiccorrect INT DEFAULT 0,
@@ -24,7 +25,7 @@ CREATE TABLE
         totalquizzes INT DEFAULT 0,
         totaltime INT DEFAULT 0,
         PRIMARY KEY (userstatsid),
-        FOREIGN KEY (username) REFERENCES users(username) -- change column names to lowercase otherwise ERROR
+        FOREIGN KEY (userid) REFERENCES users(userid) -- change column names to lowercase otherwise ERROR
     );
 
 CREATE TABLE

@@ -25,7 +25,6 @@ async function update(req, res) {
     try {
         const username = req.params.username
         const data = req.body
-        console.log(data);
         const userstats = await Userstats.getUserStatsByUsername(username)
 
         const result = await userstats.updateUserStats(data)
