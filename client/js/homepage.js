@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// homepage.js
-const categoryButtons = document.querySelectorAll('.subject-btn, .random-btn');
+const categoryButtons = document.querySelectorAll('.subject-btn, .random-btn'); 
 
 categoryButtons.forEach(button => { 
+  // button.classList.add("subject-btn", "btn-outline-primary", "btn", "m-1");
+// Changes the button styling shortcut !
   button.addEventListener('click', () => { 
     const category = button.getAttribute('data-category');
-    // ✅ just navigate — don't fetch here
     window.location.href = `mainQuestions.html?category=${category}`;
   });
 });

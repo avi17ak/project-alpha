@@ -1,4 +1,3 @@
-// fetchQuestions.js
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.location.pathname.includes("mainQuestions.html")) return;
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchQuestionData(category);
 
-  // --- Fetch all questions ---
   async function fetchQuestionData(category) {
     try {
       console.log("📡 Fetching questions for category:", category);
@@ -67,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     questionContainer.textContent = q.question ?? "⚠️ Missing question text";
     difficultyContainer.textContent = `Difficulty: ${q.difficulty ?? "N/A"}`;
 
-    //Need array to shuffle options on page
     const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(
       Boolean
     );
@@ -78,10 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Shuffle
     options.sort(() => Math.random() - 0.5);
 
-    // Render
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
