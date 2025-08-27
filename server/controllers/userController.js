@@ -16,23 +16,17 @@ async function login(req, res) {
   try {
     const user = await User.getOneByUsername(data.username);
     const match = await bcrypt.compare(data.password, user.password);
+
     if (match) {
       const payload = { username: user.username };
-      const sendToken = (err, token) => {
-        if (err) {
-          throw Error("Error in token generation");
-        }
-        res.status(200).json({
-          success: true,
-          token: token,
-        });
-      };
-      jwt.sign(
-        payload,
-        process.env.SECRET_TOKEN,
-        { expiresIn: 3600 },
-        sendToken
-      );
+
+      // Generate token synchronously
+      const token = jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 });
+
+      return res.status(200).json({
+        success: true,
+        token: token
+      });
     } else {
       throw Error("User authentication unsuccessful");
     }
@@ -40,5 +34,8 @@ async function login(req, res) {
     res.status(401).json({ error: error.message });
   }
 }
+
+
+
 
 module.exports = { register, login };
