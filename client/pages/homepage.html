@@ -20,9 +20,9 @@
     <header
       class="top-bar d-flex justify-content-between align-items-center px-3 py-2 bg-light shadow-sm"
     >
+        <a class="home-icon" href="homepage.html">
       <!-- Home Icon -->
       <div class="home-icon">
-        <i class="bi bi-house-door-fill fs-4" href="homepage.html"></i> 
         <!-- Links home icon to homepage -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,7 @@
           />
         </svg>
       </div>
+      </a>
       <!-- Title  -->
       <h1 class="m-0">Homepage</h1>
 
@@ -56,6 +57,7 @@
             fill="currentColor"
             class="bi bi-person-fill"
             viewBox="0 0 16 16"
+            
           >
             <path
               d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
@@ -67,7 +69,7 @@
           aria-labelledby="userDropdown"
         >
         <!-- Linked log out to index html, empty link for account -->
-          <li><a class="dropdown-item" href="#">Account</a></li>
+          <li><a class="dropdown-item" href="accountpage.html">Account</a></li>
           <li><a class="dropdown-item" href="index.html">Log out</a></li>
         </ul>
       </div>
@@ -75,11 +77,11 @@
 
     <main class="content">
 <!-- All the buttons -->
-      <button class="subject-btn" href="homepage.html">Geography</button>
-      <button class="subject-btn">History</button>
-      <button class="subject-btn">Art</button>
-      <button class="subject-btn">Music</button>
-      <button class="random-btn">Random</button>
+      <button class="subject-btn" data-category="GEO">Geography</button>
+      <button class="subject-btn" data-category="HIS">History</button>
+      <button class="subject-btn" data-category="SPA">Spanish</button>
+      <button class="subject-btn" data-category="MUS">Music</button>
+      <button class="random-btn" data-category="RAN">Random</button>
 
 
     </main>
@@ -87,6 +89,6 @@
 
     <!-- Connections to bootstrap js and our js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/index.js"></script>
+    <script src="../js/homepage.js"></script>
   </body>
 </html>
