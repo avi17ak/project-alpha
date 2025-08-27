@@ -36,15 +36,16 @@ class Userstats {
     }
 
     static async createNewUserStats(data) {
-        const { username } = data
+        const { username, userid } = data
+        console.log(data);
 
         const existingUserStats = await db.query('SELECT username FROM userstats WHERE username = $1', [username])
 
         if (existingUserStats.rows.length === 0) {
             let response = await db.query(`INSERT INTO userstats 
-                (username, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime) 
+                (username, userid, overallpercentage, geographycorrect, musiccorrect, historycorrect, spanishcorrect, totalquizzes, totaltime) 
                 VALUES 
-                ($1, 0, 0, 0, 0, 0, 0, 0) RETURNING *;`, [username])
+                ($1, $2, 0, 0, 0, 0, 0, 0, 0) RETURNING *;`, [username, userid])
 
             return new Userstats(response.rows[0])
         } else {

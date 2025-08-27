@@ -29,7 +29,8 @@ async function register_event (e){
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username: form.get('username')
+            username: form.get('username'),
+            userid: data.userid
         })
     }
     console.log(form.get('username'));
