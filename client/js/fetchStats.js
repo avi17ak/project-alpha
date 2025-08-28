@@ -62,6 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
       statsContainer.innerHTML = `
         <div class="stats-item">
           <strong>Overall %:</strong> ${user.overallpercentage}%
+          <br>
+          <strong>Geography questions answered correctly:</strong> ${user.geographycorrect}
+          <br>
+          <strong>History questions answered correctly:</strong> ${user.historycorrect}
+          <br>
+          <strong>Spanish questions answered correctly:</strong> ${user.spanishcorrect}
+          <br>
+          <strong>Music questions answered correctly:</strong> ${user.musiccorrect}
+          <br>
+          <strong>Total quizzes:</strong> ${user.totalquizzes}
         </div>
       `;
     } catch (err) {
