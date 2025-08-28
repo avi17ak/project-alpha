@@ -57,7 +57,7 @@ async function changeEmailInDB(currentEmail, newEmail) {
         
     }
 }catch (err){
-    alert('You are not authorised to change thi email.');
-    throw new Error ('You are not authorised to change thi email')
+    alert('You are not authorised to change this email.');
+    throw new Error ('You are not authorised to change this email.')
 }
 }
