@@ -1,6 +1,4 @@
-// Wait until DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Protect page: redirect if not logged in ---
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Please log in first.");
@@ -8,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // --- Logout button ---
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
@@ -17,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem('userid')
       localStorage.removeItem('username')
       alert("You have been logged out.");
-      window.location.assign("index.html"); // redirect to login page
+      window.location.assign("index.html");
     });
   }
 });
