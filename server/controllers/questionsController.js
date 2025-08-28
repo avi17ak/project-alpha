@@ -27,15 +27,15 @@ async function getBySubjectCat (req, res) {
     }
 }
 
-// async function getByDifficulty (req, res) {
-//     try {
-//         let difficulty = req.params.difficulty
-//         const questions = await Questions.getByDifficulty(difficulty)
-//         res.status(200).json(questions)
-//     } catch(err) {
-//         res.status(404).json({ error: err.message })
-//     }
-// }
+async function getByDifficulty (req, res) {
+    try {
+        let difficulty = req.params.difficulty
+        const questions = await Questions.getByDifficulty(difficulty)
+        res.status(200).json(questions)
+    } catch(err) {
+        res.status(404).json({ error: err.message })
+    }
+}
 
 module.exports = {
     show, 
