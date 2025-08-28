@@ -24,17 +24,17 @@ async function create(req, res) {
 async function update(req, res) {
     try {
         const username = req.params.username
-        const data = req.body
-        const userstats = await Userstats.getUserStatsByUsername(username)
+        const data = { ...req.body, username } // ensure username is present
 
+        const userstats = await Userstats.getUserStatsByUsername(username)
         const result = await userstats.updateUserStats(data)
 
         res.status(200).json(result)
-
     } catch(err) {
-        res.status(404).json({error: err.message})
+        res.status(404).json({ error: err.message })
     }
 }
+
 
 module.exports = {
     show,

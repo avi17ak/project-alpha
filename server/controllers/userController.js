@@ -4,11 +4,25 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 async function register(req, res) {
-  const data = req.body;
-  const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
-  data.password = await bcrypt.hash(data.password, salt);
-  const result = await User.createUser(data);
-  res.status(201).send(result);
+  try {
+    const data = req.body;
+
+    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+    data.password = await bcrypt.hash(data.password, salt);
+
+    const result = await User.createUser(data);
+    res.status(201).send(result);
+  } catch (err) {
+    // Check if the error is about duplicate email/username
+    if (err.message.includes("already exists")) {
+      return res
+        .status(400)
+        .json({ error: "Email or username already exists" });
+    }
+
+    console.error("Register error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 async function login(req, res) {
@@ -30,7 +44,7 @@ async function login(req, res) {
           success: true,
           token: token,
           userid: user.userid,
-          username: user.username
+          username: user.username,
         });
       };
 
@@ -50,24 +64,22 @@ async function login(req, res) {
 
 async function update(req, res) {
   try {
-    const id = req.params.id
-    const data = req.body
-    const user = await User.getOneById(id)
-    const result = await user.updateUser(data)
-    res.status(200).json(result)
-
-  } catch(err) {
+    const id = req.params.id;
+    const data = req.body;
+    const user = await User.getOneById(id);
+    const result = await user.updateUser(data);
+    res.status(200).json(result);
+  } catch (err) {
     res.status(404).json({ error: err.message });
   }
 }
 
 async function show(req, res) {
   try {
-    const id = req.params.id
-    const userData = await User.getOneById(id)
-    res.status(200).json(userData)
-
-  } catch(err) {
+    const id = req.params.id;
+    const userData = await User.getOneById(id);
+    res.status(200).json(userData);
+  } catch (err) {
     res.status(404).json({ error: err.message });
   }
 }

@@ -9,8 +9,9 @@
     "coverage": "jest --coverage",
     "test:homepage": "jest -i ./client/__tests__/homepage.spec.js --watchAll",
     "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll",
-    "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll"
-    "test:models": "jest -i ./server/__tests__/unit/models --watchAll"
+    "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll",
+    "test:models": "jest -i ./server/__tests__/unit/models --watchAll",
+    "test:integration": "NODE_ENV=test jest server/__test__/integration"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,9 @@
     "pg": "^8.16.3"
   },
   "jest": {
-    "setupFilesAfterEnv": ["./jest.setup.js"],
-    "testEnvironment": "jsdom"
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ],
+    "testEnvironment": "node"
   }
 }
