@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const usernameContainer = document.querySelector(".username-btn");
   const statsContainer = document.querySelector(".stats-box");
+  const historybox = document.querySelector(".history-box");
+  const geographybox = document.querySelector(".geography-box");
+  const musicbox = document.querySelector(".music-box");
+  const spanishbox = document.querySelector(".spanish-box");
+
   const params = new URLSearchParams(window.location.search);
       const userid = localStorage.getItem("username");
 
@@ -59,25 +64,41 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       usernameContainer.textContent = `Welcome ${userid}, here are your stats:`;
-      statsContainer.innerHTML = `
+      historybox.innerHTML = `
         <div class="stats-item">
-          <strong>Overall %:</strong> ${user.overallpercentage}%
-          <br>
-          <strong>Geography questions answered correctly:</strong> ${user.geographycorrect}
           <br>
           <strong>History questions answered correctly:</strong> ${user.historycorrect}
           <br>
-          <strong>Spanish questions answered correctly:</strong> ${user.spanishcorrect}
+        </div>
+      `;
+      geographybox.innerHTML = `
+        <div class="stats-item">
+          <br>
+          <strong>Geography questions answered correctly:</strong> ${user.geographycorrect}
+          <br>
+        </div>
+      `;
+      musicbox.innerHTML = `
+        <div class="stats-item">
           <br>
           <strong>Music questions answered correctly:</strong> ${user.musiccorrect}
           <br>
-          <strong>Total quizzes:</strong> ${user.totalquizzes}
+        </div>
+      `;
+      spanishbox.innerHTML = `
+        <div class="stats-item">
+          <br>
+          <strong>Spanish questions answered correctly:</strong> ${user.spanishcorrect}
+          <br>
         </div>
       `;
     } catch (err) {
       console.error("Error fetching user:", err);
       usernameContainer.textContent = "Error loading user.";
-      statsContainer.textContent = "Error loading stats.";
+      historybox.textContent = "Error loading stats.";
+      geographybox.textContent = "Error loading stats.";
+      musicbox.textContent = "Error loading stats.";
+      spanishbox.textContent = "Error loading stats.";
     }
   }
 
