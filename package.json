@@ -11,7 +11,7 @@
 
     "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll",
     "test:models": "jest -i ./server/__tests__/unit/models --watchAll",
-    "test:integration": "NODE_ENV=test jest server/__test__/integration"
+    "test:integration": "NODE_ENV=test jest server/__test__/integration",
     "test:homepage": "jest -i ./client/__tests__/homepage.test.js --watchAll",
     "test:index": "jest -i ./client/__tests__/index.test.js --watchAll",
     "test:changePassword": "jest -i ./client/__tests__/changePassword.test.js --watchAll",
@@ -49,8 +49,6 @@
     "pg": "^8.16.3"
   },
   "jest": {
-
-
     "setupFilesAfterEnv": ["./jest.setup.js"],
     "testEnvironment": "jsdom",
     "testPathIgnorePatterns": [
