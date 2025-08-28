@@ -9,9 +9,6 @@ questionRouter.get(
   "/subject/:subjectCat",
   questionController.getBySubjectCat
 );
-// questionRouter.get(
-//   "/difficulty/:difficulty",
-//   questionController.getByDifficulty
-// );
+
 
 module.exports = questionRouter;
