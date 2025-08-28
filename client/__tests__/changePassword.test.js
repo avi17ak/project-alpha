@@ -3,7 +3,7 @@ const { renderDOM } = require('./helpers');
 let dom;
 let document;
 
-describe('homepage.html', () => {
+describe('Change Password', () => {
   beforeEach(async () => {
     dom = await renderDOM('./client/pages/change_info/passChange.html');
     document = await dom.window.document;

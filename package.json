@@ -7,8 +7,11 @@
     "dev": "nodemon ./server/index.js",
     "test": "jest --watchAll",
     "coverage": "jest --coverage",
-    "test:homepage": "jest -i ./client/__tests__/homepage.spec.js --watchAll",
-    "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll",
+    "test:homepage": "jest -i ./client/__tests__/homepage.test.js --watchAll",
+    "test:index": "jest -i ./client/__tests__/index.test.js --watchAll",
+    "test:changePassword": "jest -i ./client/__tests__/changePassword.test.js --watchAll",
+    "test:changeEmail": "jest -i ./client/__tests__/changeEmail.test.js --watchAll",
+    "test:signup": "jest -i ./client/__tests__/signup.test.js --watchAll",
     "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll",
     "test:models": "jest -i ./server/__tests__/unit/models --watchAll"
   },
