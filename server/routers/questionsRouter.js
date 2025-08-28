@@ -10,5 +10,4 @@ questionRouter.get(
   questionController.getBySubjectCat
 );
 
-
 module.exports = questionRouter;

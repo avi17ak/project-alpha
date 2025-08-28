@@ -1,4 +1,4 @@
-const db = require('../db/connect')
+const { db } = require('../db/connect');
 
 class Questions {
     constructor({ questionid, question, answer, optionone, optiontwo, optionthree, subjectcat, difficulty }) {
