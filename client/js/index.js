@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     try {
+      localStorage.setItem('username', formData.get('username'));
+    } catch (err) {
+      console.error("Failed to save username:", err);
+    }
+
+    try {
       const response = await fetch('http://localhost:3000/user/login', options);
       const data = await response.json();
       console.log("Login response:", data);
