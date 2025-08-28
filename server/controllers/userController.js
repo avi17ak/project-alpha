@@ -53,9 +53,7 @@ async function update(req, res) {
     const id = req.params.id
     const data = req.body
     const user = await User.getOneById(id)
-
     const result = await user.updateUser(data)
-
     res.status(200).json(result)
 
   } catch(err) {
