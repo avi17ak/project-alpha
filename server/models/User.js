@@ -46,10 +46,13 @@ class User {
 
   async updateUser(data) {
     const {name, email, password, username} = data
-
+    
     //salt and encrypt
+    let encrypted_password = null
+    if(password){
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
     const encrypted_password = await bcrypt.hash(password, salt);
+    }
 
     const response = await db.query(`UPDATE users SET
       name = COALESCE($1, name),
@@ -58,8 +61,8 @@ class User {
       username = COALESCE($4, username)
       WHERE userid = $5
       RETURNING *;`, [name, email, encrypted_password, username, this.userid])
-    
-    if (response.rows.length !== 1) {
+      
+      if (response.rows.length !== 1) {
             throw new Error('Unable to update the user details')
         } else {
             return new User(response.rows[0])

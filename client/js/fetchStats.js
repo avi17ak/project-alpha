@@ -9,31 +9,34 @@ if (logoutBtn) {
   });
 }
 
+
+
+console.log(localStorage.getItem("username"));
+
+
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.location.pathname.includes("accountpage.html")) return;
 
   const usernameContainer = document.querySelector(".username-btn");
   const statsContainer = document.querySelector(".stats-box");
-
   const params = new URLSearchParams(window.location.search);
-  const username = params.get("username");
+      const userid = localStorage.getItem("username");
 
-  if (!username) {
+  if (!userid) {
     usernameContainer.textContent = "No username selected.";
     return;
   }
 
-  async function fetchUser(username) {
+  async function fetchUser(userid) {
     try {
-      console.log("Fetching user data for:", username);
+      console.log("Fetching user data for:", userid);
       const options = {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       };
-
       const resp = await fetch(
-        `http://localhost:3000/userstats/${username}`,
+        `http://localhost:3000/userstats/${userid}`,
         options
       );
 
@@ -55,10 +58,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      usernameContainer.textContent = user.username;
+      usernameContainer.textContent = `Welcome ${userid}, here are your stats:`;
       statsContainer.innerHTML = `
         <div class="stats-item">
           <strong>Overall %:</strong> ${user.overallpercentage}%
+          <br>
+          <strong>Geography questions answered correctly:</strong> ${user.geographycorrect}
+          <br>
+          <strong>History questions answered correctly:</strong> ${user.historycorrect}
+          <br>
+          <strong>Spanish questions answered correctly:</strong> ${user.spanishcorrect}
+          <br>
+          <strong>Music questions answered correctly:</strong> ${user.musiccorrect}
+          <br>
+          <strong>Total quizzes:</strong> ${user.totalquizzes}
         </div>
       `;
     } catch (err) {
@@ -68,5 +81,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  fetchUser(username);
+  fetchUser(userid);
 });
