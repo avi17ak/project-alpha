@@ -3,13 +3,11 @@ const logoutBtn = document.getElementById("logoutBtn");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    localStorage.removeItem("token"); // remove JWT
+    localStorage.removeItem("token"); 
     alert("You have been logged out.");
-    window.location.assign("index.html"); // redirect to login page
+    window.location.assign("index.html"); 
   });
 }
-
-
 
 console.log(localStorage.getItem("username"));
 
@@ -19,11 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const usernameContainer = document.querySelector(".username-btn");
   const statsContainer = document.querySelector(".stats-box");
-  const historybox = document.querySelector(".history-box");
-  const geographybox = document.querySelector(".geography-box");
-  const musicbox = document.querySelector(".music-box");
-  const spanishbox = document.querySelector(".spanish-box");
-
   const params = new URLSearchParams(window.location.search);
   const userid = localStorage.getItem("username");
 
@@ -36,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log('Fetching user data for:', userid);
 
-      // Build headers (token optional)
       let auth = '';
       try {
         const t = localStorage.getItem('token');
@@ -45,11 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const options = { headers: { Authorization: auth } };
 
-      // 1) Try to GET current stats
-      let resp = await fetch('http://127.0.0.1:3000/userstats/' + encodeURIComponent(userid), options);
+      let resp = await fetch(`http://localhost:3000/questions/subject/${userid}`, options);
       console.log('GET /userstats status:', resp.status);
 
-      // 2) If not found, create a zeroed row and GET again
       if (resp.status === 404) {
         const createOpts = {
           method: 'POST',
@@ -59,11 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           body: JSON.stringify({ username: userid })
         };
-        const createResp = await fetch('http://127.0.0.1:3000/userstats', createOpts);
+        const createResp = await fetch('http://localhost:3000/userstats', createOpts);
         console.log('POST /userstats status:', createResp.status);
 
-        // Re-fetch after create
-        resp = await fetch('http://127.0.0.1:3000/userstats/' + encodeURIComponent(userid), options);
+        resp = await fetch(`http://localhost:3000/userstats/${userid}`, options);
         console.log('ReGET /userstats status:', resp.status);
       }
 
@@ -79,8 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('No user found in API response');
         return;
       }
-
-      // --- Compute Overall % on the client (no Number(), no ||, no ternary) ---
       let geo = user.geographycorrect; if (geo == null) geo = 0;
       let his = user.historycorrect;   if (his == null) his = 0;
       let spa = user.spanishcorrect;   if (spa == null) spa = 0;
@@ -94,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (totalQuestions > 0) {
         overall = Math.round((totalCorrect / totalQuestions) * 100);
       }
-      // ------------------------------------------------------------------------
 
       usernameContainer.textContent = 'Welcome ' + userid + ', here are your stats:';
       statsContainer.innerHTML =
