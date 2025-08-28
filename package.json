@@ -8,9 +8,6 @@
     "test": "jest --watchAll",
     "test:frontend": "jest -i ./client/__tests__/ --watchAll --coverage",
     "coverage": "jest --coverage",
-    "test:homepage": "jest -i ./client/__tests__/homepage.spec.js --watchAll",
-    "test:account": "jest -i ./client/__tests__/account.spec.js --watchAll",
-    "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll",
     "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll",
     "test:models": "jest -i ./server/__tests__/unit/models --watchAll",
     "test:fetchQ": "jest -i ./client/__tests__/fetchQuestions.test.js --watchAll"
