@@ -140,5 +140,17 @@ describe('Userstats controller', () => {
             expect(Userstats.prototype.updateUserStats).toHaveBeenCalledWith({spanishcorrect: 7, totalquizzes: 1})
             expect(mockStatus).toHaveBeenCalledWith(200)
         })
+
+        it('should return an error if the username is not found', async () => {
+            const mockReq = { params: { username: 'max' }, body: {} };
+
+            jest.spyOn(Userstats, 'getUserStatsByUsername').mockRejectedValue(new Error('no!'));
+
+            await userStatsController.update(mockReq, mockRes);
+
+            expect(Userstats.getUserStatsByUsername).toHaveBeenCalledWith('max');
+            expect(mockStatus).toHaveBeenCalledWith(404);
+            expect(mockJson).toHaveBeenCalledWith({error: 'no!'});
+            })
     })
 })
