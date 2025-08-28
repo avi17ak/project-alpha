@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const spanishbox = document.querySelector(".spanish-box");
 
   const params = new URLSearchParams(window.location.search);
-      const userid = localStorage.getItem("username");
+  const userid = localStorage.getItem("username");
 
   if (!userid) {
     usernameContainer.textContent = "No username selected.";
@@ -34,73 +34,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchUser(userid) {
     try {
-      console.log("Fetching user data for:", userid);
-      const options = {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      };
-      const resp = await fetch(
-        `http://localhost:3000/userstats/${userid}`,
-        options
-      );
+      console.log('Fetching user data for:', userid);
 
-      console.log("Response status:", resp.status);
+      // Build headers (token optional)
+      let auth = '';
+      try {
+        const t = localStorage.getItem('token');
+        if (t) { auth = t; }
+      } catch (e) {}
 
-      if (!resp.ok) {
-        throw new Error("API request failed");
+      const options = { headers: { Authorization: auth } };
+
+      // 1) Try to GET current stats
+      let resp = await fetch('http://127.0.0.1:3000/userstats/' + encodeURIComponent(userid), options);
+      console.log('GET /userstats status:', resp.status);
+
+      // 2) If not found, create a zeroed row and GET again
+      if (resp.status === 404) {
+        const createOpts = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': auth
+          },
+          body: JSON.stringify({ username: userid })
+        };
+        const createResp = await fetch('http://127.0.0.1:3000/userstats', createOpts);
+        console.log('POST /userstats status:', createResp.status);
+
+        // Re-fetch after create
+        resp = await fetch('http://127.0.0.1:3000/userstats/' + encodeURIComponent(userid), options);
+        console.log('ReGET /userstats status:', resp.status);
       }
 
-      const data = await resp.json();
-      console.log("Raw API response:", data);
+      if (!resp.ok) {
+        const txt = await resp.text();
+        throw new Error('API request failed: ' + resp.status + ' ' + txt);
+      }
 
-      const user = data.data ? data.data : data;
-
+      const user = await resp.json();
       if (!user) {
-        usernameContainer.textContent = "No user found.";
-        statsContainer.textContent = "No stats available.";
-        console.error(" No user found in API response");
+        usernameContainer.textContent = 'No user found.';
+        statsContainer.textContent = 'No stats available.';
+        console.error('No user found in API response');
         return;
       }
 
-      usernameContainer.textContent = `Welcome ${userid}, here are your stats:`;
-      historybox.innerHTML = `
-        <div class="stats-item">
-          <br>
-          <strong>History questions answered correctly:</strong> ${user.historycorrect}
-          <br>
-        </div>
-      `;
-      geographybox.innerHTML = `
-        <div class="stats-item">
-          <br>
-          <strong>Geography questions answered correctly:</strong> ${user.geographycorrect}
-          <br>
-        </div>
-      `;
-      musicbox.innerHTML = `
-        <div class="stats-item">
-          <br>
-          <strong>Music questions answered correctly:</strong> ${user.musiccorrect}
-          <br>
-        </div>
-      `;
-      spanishbox.innerHTML = `
-        <div class="stats-item">
-          <br>
-          <strong>Spanish questions answered correctly:</strong> ${user.spanishcorrect}
-          <br>
-        </div>
-      `;
+      // --- Compute Overall % on the client (no Number(), no ||, no ternary) ---
+      let geo = user.geographycorrect; if (geo == null) geo = 0;
+      let his = user.historycorrect;   if (his == null) his = 0;
+      let spa = user.spanishcorrect;   if (spa == null) spa = 0;
+      let mus = user.musiccorrect;     if (mus == null) mus = 0;
+      let quizzes = user.totalquizzes; if (quizzes == null) quizzes = 0;
+
+      let totalCorrect = geo + his + spa + mus;
+      let totalQuestions = quizzes * 10;
+
+      let overall = 0;
+      if (totalQuestions > 0) {
+        overall = Math.round((totalCorrect / totalQuestions) * 100);
+      }
+      // ------------------------------------------------------------------------
+
+      usernameContainer.textContent = 'Welcome ' + userid + ', here are your stats:';
+      statsContainer.innerHTML =
+        '<div class="stats-item">' +
+          '<strong>Overall %:</strong> ' + overall + '%<br>' +
+          '<strong>Geography questions answered correctly:</strong> ' + geo + '<br>' +
+          '<strong>History questions answered correctly:</strong> ' + his + '<br>' +
+          '<strong>Spanish questions answered correctly:</strong> ' + spa + '<br>' +
+          '<strong>Music questions answered correctly:</strong> ' + mus + '<br>' +
+          '<strong>Total quizzes:</strong> ' + quizzes +
+        '</div>';
+
     } catch (err) {
-      console.error("Error fetching user:", err);
-      usernameContainer.textContent = "Error loading user.";
-      historybox.textContent = "Error loading stats.";
-      geographybox.textContent = "Error loading stats.";
-      musicbox.textContent = "Error loading stats.";
-      spanishbox.textContent = "Error loading stats.";
+      console.error('Error fetching user:', err);
+      usernameContainer.textContent = 'Error loading user.';
+      statsContainer.textContent = 'Error loading stats.';
     }
   }
+
 
   fetchUser(userid);
 });
