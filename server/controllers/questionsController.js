@@ -40,5 +40,5 @@ async function getByDifficulty (req, res) {
 module.exports = {
     show, 
     getBySubjectCat,
-    getByDifficulty
+    // getByDifficulty
 }
