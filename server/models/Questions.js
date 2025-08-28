@@ -1,4 +1,4 @@
-const db = require('../db/connect')
+const { db } = require('../db/connect');
 
 class Questions {
     constructor({ questionid, question, answer, optionone, optiontwo, optionthree, subjectcat, difficulty }) {
@@ -34,15 +34,6 @@ class Questions {
         const { rows } = await db.query(`SELECT * FROM questions ORDER BY random() LIMIT $1;`,[count]);
         if (rows.length == 0) {
             throw new Error("No questions found for this category.")
-        } else {
-            return rows.map(question => new Questions(question))
-        }
-    }
-
-    static async getByDifficulty(difficulty, count = 10) {
-        const { rows } = await db.query(`SELECT * FROM questions WHERE difficulty = $1 ORDER BY random() LIMIT $2;`,[difficulty, count]);
-        if (rows.length == 0) {
-            throw new Error("No questions found for this difficulty.")
         } else {
             return rows.map(question => new Questions(question))
         }
