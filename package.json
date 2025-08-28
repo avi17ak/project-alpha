@@ -7,7 +7,9 @@
     "dev": "nodemon ./server/index.js",
     "test": "jest --watchAll",
     "coverage": "jest --coverage",
-    "test:math": "jest -i ./client/__tests__/homepage.spec.js --watchAll"
+    "test:homepage": "jest -i ./client/__tests__/homepage.spec.js --watchAll",
+    "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll"
+    
   },
   "repository": {
     "type": "git",
