@@ -49,7 +49,7 @@
     "setupFilesAfterEnv": [
       "./jest.setup.js"
     ],
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testPathIgnorePatterns": [
       "./client/__tests__/helpers.js",
       "./server/__tests__/integration/config.js"

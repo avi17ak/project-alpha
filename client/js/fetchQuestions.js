@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
-      btn.classList.add("option-btn", "btn-outline-dark", "btn", "m-1");
+      btn.classList.add("option-btn", "btn-light", "btn", "m-1");
       btn.textContent = opt;
 
       btn.addEventListener("click", () => {
@@ -127,11 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selected === correct) {
       score++;
       console.log("✅ Correct! Score:", score);
-      btn.classList.remove("btn-outline-dark");
+      btn.classList.remove("btn-light");
       btn.classList.add("btn-success");
     } else {
       console.log("❌ Wrong. Correct answer was:", correct);
-      btn.classList.remove("btn-outline-dark");
+      btn.classList.remove("btn-light");
       btn.classList.add("btn-danger");
     }
 

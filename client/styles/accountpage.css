@@ -11,7 +11,9 @@ main {
 
 body {
   font-family: Corbel, sans-serif;
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
+  background: linear-gradient(to bottom right, #676767, #676767);
+  min-height: 100vh; /* make sure it fills screen */
   display: flex;
   flex-direction: column;
   align-items: center;
