@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "setup-db": "node ./server/db/setup.js",
-    "dev": "nodemon ./server/index.js"
+    "dev": "nodemon ./server/index.js",
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/avi17ak/project-alpha#readme",
   "description": "",
   "devDependencies": {
+    "jest": "^30.1.1",
     "nodemon": "^3.1.10"
   },
   "dependencies": {
