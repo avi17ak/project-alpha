@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const usernameContainer = document.querySelector(".username-btn");
   const statsContainer = document.querySelector(".stats-box");
+  const historybox = document.querySelector(".history-box");
+  const geographybox = document.querySelector(".geography-box");
+  const musicbox = document.querySelector(".music-box");
+  const spanishbox = document.querySelector(".spanish-box");
+
   const params = new URLSearchParams(window.location.search);
   const userid = localStorage.getItem("username");
 

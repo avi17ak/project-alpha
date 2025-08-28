@@ -6,7 +6,17 @@
     "setup-db": "node ./server/db/setup.js",
     "dev": "nodemon ./server/index.js",
     "test": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "test:frontend": "jest -i ./client/__tests__/ --watchAll --coverage",
+    "coverage": "jest --coverage",
+    "test:homepage": "jest -i ./client/__tests__/homepage.test.js --watchAll",
+    "test:index": "jest -i ./client/__tests__/index.test.js --watchAll",
+    "test:changePassword": "jest -i ./client/__tests__/changePassword.test.js --watchAll",
+    "test:changeEmail": "jest -i ./client/__tests__/changeEmail.test.js --watchAll",
+    "test:signup": "jest -i ./client/__tests__/signup.test.js --watchAll",
+    "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll",
+    "test:models": "jest -i ./server/__tests__/unit/models --watchAll",
+    "test:fetchQ": "jest -i ./client/__tests__/fetchQuestions.test.js --watchAll"
+
   },
   "repository": {
     "type": "git",
@@ -22,7 +32,10 @@
   "description": "",
   "devDependencies": {
     "jest": "^30.1.1",
-    "nodemon": "^3.1.10"
+    "jest-environment-jsdom": "^30.1.1",
+    "jsdom": "^26.1.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -31,5 +44,12 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["./jest.setup.js"],
+    "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "./client/__tests__/helpers.js"
+    ]
   }
 }

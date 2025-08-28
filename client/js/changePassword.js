@@ -10,39 +10,58 @@ function changePassword(e) {
 
     changePasswordInDB(currentPassword, newPassword)
 
-    // Redirect after saving
-        alert('Successfully Logged In');
-        window.location.assign("homepage.html");
+    //reassign empty values for the form
+    e.target[0].value = ""
+    e.target[1].value = ""
 }
 
 async function changePasswordInDB(currentPassword, newPassword) {
     const userid = localStorage.getItem('userid')
     
-    
-    //get request to find the current password
-    //response = await fetch(`localhost3000`)
+    try {
+        //  const options = {
+        //     method: "GET",
+        //     headers: {
+        //         "Accept": "application/json",
+        //         "Content-Type": "application/json",
+        //         Authorization: localStorage.getItem("token"),
+        //     }
+        //     }
 
-    const response = {password: currentPassword}
+        // //get request to find the current password
+        // response = await fetch(`http://localhost:3000/user/${userid}`,options)
+        // data2 = await response.json()
+        
+        // const match = await bcrypt.compare(currentPassword, data2.password);
+        // console.log(match);
 
-    if (response.password === currentPassword) {
-        const options = {
-        method: "PATCH",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-            password: newPassword
-        })
+        const match = true
+        if (match) {
+            const options = {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({
+                password: newPassword
+            })
+            }
+
+            updatedPassword = await fetch(`http://localhost:3000/user/${userid}`, options)
+
+            //take you back to accounts page
+            alert('Successfully changed password!');
+            window.location.assign("../accountpage.html");
+
+        } else {
+            throw new Error('The password could not be changed.')
         }
 
-        updatedPassword = await fetch(`http://localhost:3000/user/${userid}`, options)
-        alert('Successfully changed password!');
-        window.location.assign("../accountpage.html");
-        //take you back to accounts page
-    } else {
+    } catch (err) {
         alert('The password could not be changed.');
         throw new Error('The password could not be changed.')
     }
 }
+    

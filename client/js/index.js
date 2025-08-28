@@ -1,11 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('.login_form');
 
-  if (!loginForm) {
-    console.error("Login form not found. Make sure your form has class 'login_form'.");
-    return;
-  }
-
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(loginForm);
