@@ -4,7 +4,8 @@ body {
   align-items: center;
   min-height: 100vh;
   margin: 0;
-  background-color: #82b74b;
+  background: linear-gradient(to bottom right, #303030, #303030);
+  min-height: 100vh; /* make sure it fills screen */
 }
 
 
@@ -25,7 +26,6 @@ header #change_home{
 header i {
   font-size: 50px;
   color: white;
-  
 }
 
 header a {
@@ -41,7 +41,7 @@ section {
     display: flex;
     flex-direction: column;
     width: 450px;
-    background-color: #405d27;
+    background-color: #505050;
     border: 5px solid #eee;
     border-radius: 15px;
 }
@@ -86,7 +86,7 @@ input:focus{
 }
 
 button{
-  background-color:  #405d27;
+  background-color:  #676767;
   color: white;
   border: 5px solid #eee;
   border-radius: 10px;
@@ -99,7 +99,7 @@ button{
 button:hover{
     background-color: #eee;
     color: black;
-    border:5px solid #eee;
+    border:5px solid #676767;
     transition-duration: 0.4s;
     cursor: pointer;
 }

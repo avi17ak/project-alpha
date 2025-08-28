@@ -7,7 +7,9 @@
 
 body {
   font-family: Corbel, sans-serif;
-  background: hsl(0, 0%, 29%);
+  /* background: hsl(0, 0%, 29%); */
+  background: linear-gradient(to bottom right, #676767, #676767);
+  min-height: 100vh; /* make sure it fills screen */
   display: flex;
   flex-direction: column;
   align-items: center;
