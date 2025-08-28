@@ -38,15 +38,6 @@ class Questions {
             return rows.map(question => new Questions(question))
         }
     }
-
-    // static async getByDifficulty(difficulty, count = 10) {
-    //     const { rows } = await db.query(`SELECT * FROM questions WHERE difficulty = $1 ORDER BY random() LIMIT $2;`,[difficulty, count]);
-    //     if (rows.length == 0) {
-    //         throw new Error("No questions found for this difficulty.")
-    //     } else {
-    //         return rows.map(question => new Questions(question))
-    //     }
-    // }
 }
 
 module.exports = Questions

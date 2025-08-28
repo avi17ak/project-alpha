@@ -2,25 +2,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!window.location.pathname.includes('results.html')) return;
 
   // DOM references (no HTML strings here)
-  const headingEl = document.getElementById('results-heading');
+  const heading = document.getElementById('results-heading');
   const scoreCard = document.getElementById('score-card');
-  const scoreValueEl = document.getElementById('score-value');
-  const totalValueEl = document.getElementById('total-value');
-  const percentValueEl = document.getElementById('percent-value');
-  const noResultsEl = document.getElementById('no-results');
+  const scoreValue = document.getElementById('score-value');
+  const totalValue = document.getElementById('total-value');
+  const percentValue = document.getElementById('percent-value');
+  const noResults = document.getElementById('no-results');
   const resultsList = document.getElementById('results-list');
 
   try {
     const raw = localStorage.getItem('quizResults');
     if (!raw) {
-      noResultsEl.classList.remove('d-none');
+      noResults.classList.remove('d-none');
       scoreCard.classList.add('d-none');
       return;
     }
 
     const data = JSON.parse(raw);
     const { category, score, total, userResults } = data;
-    headingEl.textContent = '🎉 Well done on completing your Quiz! 🎉';
+    heading.textContent = '🎉 Well done on completing your Quiz! 🎉';
 
     let percent = 0;
     if (total > 0) {
@@ -29,16 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
       percent = 0;
     }
     if (score == null) {
-      scoreValueEl.textContent = 0;
+      scoreValue.textContent = 0;
     } else {
-      scoreValueEl.textContent = score;
+      scoreValue.textContent = score;
     }
     if (total == null) {
-      totalValueEl.textContent = 0;
+      totalValue.textContent = 0;
     } else {
-      totalValueEl.textContent = total;
+      totalValue.textContent = total;
     }
-    percentValueEl.textContent = percent;
+    percentValue.textContent = percent;
 
     const OUTCOME = {
       true:  { emoji: '✅', badgeText: 'Correct',  badgeClass: 'text-bg-success' },
@@ -112,6 +112,66 @@ document.addEventListener('DOMContentLoaded', () => {
       resultsList.appendChild(li);
     });
 
+    (async function () {
+      try {
+        let username = null;
+        try { 
+          username = localStorage.getItem('username'); 
+        } catch (error) {
+          console.error('Failed to retrieve username from localStorage:', error);
+        }
+
+        if (!username) {
+          const p = new URLSearchParams(window.location.search);
+          username = p.get('username');
+        }
+
+        let correctCount = 0;
+        if (typeof score === 'number') {
+          correctCount = score;
+        } else if (Array.isArray(userResults)) {
+          for (let i = 0; i < userResults.length; i++) {
+            if (userResults[i] && userResults[i].isCorrect === true) {
+              correctCount = correctCount + 1;
+            }
+          }
+        }
+
+        let subjectCat = '';
+        if (category) {
+          subjectCat = String(category).toUpperCase();
+        }
+        const body = {
+          username,
+          totalquizzes: 1
+        };
+
+        if (subjectCat === 'GEO') { body.geographycorrect = correctCount; }
+        else if (subjectCat === 'MUS') { body.musiccorrect = correctCount; }
+        else if (subjectCat === 'HIS') { body.historycorrect = correctCount; }
+        else if (subjectCat === 'SPA') { body.spanishcorrect = correctCount; }
+        else {
+          console.warn('Unknown subject category; skipping stats update:', subjectCat);
+          return;
+        }
+
+        const opts = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token') || ''
+          },
+          body: JSON.stringify(body)
+        };
+
+        const resp = await fetch(`http://localhost:3000/userstats/${username}`, opts);
+        const dataResp = await resp.json();
+        console.log('User stats updated:', resp.status, dataResp);
+      } catch (err) {
+        console.error('Unable to update the user stats:', err);
+      }
+    })();
+
     const retryBtn = document.getElementById('retry-btn');
     const homeBtn  = document.getElementById('home-btn');
     if (retryBtn) {
@@ -124,10 +184,10 @@ document.addEventListener('DOMContentLoaded', () => {
       homeBtn.setAttribute('href', 'homepage.html');
     }
 
-  } catch (e) {
-    console.error('Failed to render results:', e);
-    noResultsEl.textContent = 'Not able to display your results.';
-    noResultsEl.classList.remove('d-none');
+  } catch (err) {
+    console.error('Failed to render results:', err);
+    noResults.textContent = 'Not able to display your results.';
+    noResults.classList.remove('d-none');
     scoreCard.classList.add('d-none');
   }
 });

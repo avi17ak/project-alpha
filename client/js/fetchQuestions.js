@@ -8,30 +8,7 @@
       window.location.assign("index.html"); // redirect to login page
     });
   }
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (!window.location.pathname.includes("mainQuestions.html")) return;
-
-  const questionContainer = document.querySelector(".question-container");
-  const difficultyContainer = document.querySelector(".difficulty");
-  const contentContainer = document.querySelector(".quiz-content");
-
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("category");
-
-  let questions = [];
-  let currentIndex = 0;
-  let score = 0;
-  let userResults = [];
-
-  if (!category) {
-    questionContainer.textContent = "No category selected.";
-    return;
-  }
-
-  fetchQuestionData(category);
-
-  async function fetchQuestionData(category) {
+ async function fetchQuestionData(category) {
     try {
       console.log("📡 Fetching questions for category:", category);
       const options = {
@@ -64,15 +41,26 @@ document.addEventListener("DOMContentLoaded", () => {
       questionContainer.textContent = "Error loading question.";
     }
   }
-
-  function renderQuestion(q) {
+   function renderQuestion(q) {
     if (!q) {
       console.error("⚠️ Tried to render undefined question at index:", currentIndex);
       return;
     }
 
-    questionContainer.textContent = q.question ?? "⚠️ Missing question text";
-    difficultyContainer.textContent = `Difficulty: ${q.difficulty ?? "N/A"}`;
+    let qText = "⚠️ Missing question text";
+    if (q.question) {
+      qText = q.question;
+    }
+    questionContainer.textContent = qText;
+    let diffLabel;
+    if (q.difficulty == 1 || q.difficulty === "1") {
+      diffLabel = "EASY";
+    } else if (q.difficulty == 2 || q.difficulty === "2") {
+      diffLabel = "MEDIUM";
+    } else if (q.difficulty == 3 || q.difficulty === "3") {
+      diffLabel = "HARD";
+    }
+    difficultyContainer.textContent = "" + (diffLabel || "N/A");
 
     const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(Boolean);
 
@@ -87,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
-      btn.classList.add("option-btn", "btn-outline-primary", "btn", "m-1");
+      btn.classList.add("option-btn", "btn-outline-dark", "btn", "m-1");
       btn.textContent = opt;
 
       btn.addEventListener("click", () => {
@@ -100,9 +88,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function checkAnswer(selected, correct, btn) {
+    let questionResponse = null;
+    if (Array.isArray(questions) && currentIndex >= 0 && currentIndex < questions.length) {
+      questionResponse = questions[currentIndex];
+    }
+    let subj = '';
+    if (questionResponse && questionResponse.subjectcat) {
+      subj = String(questionResponse.subjectcat).toUpperCase();
+    } else if (questionResponse && questionResponse.subjectCat) {
+      subj = String(questionResponse.subjectCat).toUpperCase();
+    }
+
+    let questionText = '';
+    if (questionResponse && questionResponse.question) {
+      questionText = questionResponse.question;
+    }
     userResults.push({
       index: currentIndex,
-      question: questions[currentIndex]?.question ?? "",
+      question: questionText,
       selected,
       correct,
       isCorrect: selected === correct,
@@ -111,11 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selected === correct) {
       score++;
       console.log("✅ Correct! Score:", score);
-      btn.classList.remove("btn-outline-primary");
+      btn.classList.remove("btn-outline-dark");
       btn.classList.add("btn-success");
     } else {
       console.log("❌ Wrong. Correct answer was:", correct);
-      btn.classList.remove("btn-outline-primary");
+      btn.classList.remove("btn-outline-dark");
       btn.classList.add("btn-danger");
     }
 
@@ -139,4 +142,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultsPath = window.location.pathname.replace("mainQuestions.html", "results.html");
     window.location.href = resultsPath.includes("results.html") ? resultsPath : "/client/pages/results.html";
   }
+  
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.location.pathname.includes("mainQuestions.html")) return;
+
+  const questionContainer = document.querySelector(".question-container");
+  const difficultyContainer = document.querySelector(".difficulty");
+  const contentContainer = document.querySelector(".quiz-content");
+
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+
+  let questions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let userResults = [];
+
+  if (!category) {
+    questionContainer.textContent = "No category selected.";
+    return;
+  }
+
+  fetchQuestionData(category);
 });
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    fetchQuestionData,
+    renderQuestion,
+    checkAnswer,
+    showResults,
+  };
+}
