@@ -51,7 +51,7 @@ class User {
     let encrypted_password = null
     if(password){
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
-    const encrypted_password = await bcrypt.hash(password, salt);
+    encrypted_password = await bcrypt.hash(password, salt);
     }
 
     const response = await db.query(`UPDATE users SET
