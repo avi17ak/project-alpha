@@ -63,4 +63,15 @@ async function update(req, res) {
   }
 }
 
-module.exports = { register, login, update };
+async function show(req, res) {
+  try {
+    const id = req.params.id
+    const userData = await User.getOneById(id)
+    res.status(200).json(userData)
+
+  } catch(err) {
+    res.status(404).json({ error: err.message });
+  }
+}
+
+module.exports = { register, login, update, show };
