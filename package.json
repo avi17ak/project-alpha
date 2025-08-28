@@ -8,7 +8,8 @@
     "test": "jest --watchAll",
     "coverage": "jest --coverage",
     "test:homepage": "jest -i ./client/__tests__/homepage.spec.js --watchAll",
-    "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll"
+    "test:signup": "jest -i ./client/__tests__/signup.spec.js --watchAll",
+    "test:backendControllers": "jest -i ./server/__tests__/unit/controllers --watchAll"
     
   },
   "repository": {
