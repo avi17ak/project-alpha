@@ -1,14 +1,26 @@
-// --- Logout button ---
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("token"); // remove JWT
-      alert("You have been logged out.");
-      window.location.assign("index.html"); // redirect to login page
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.location.pathname.includes("mainQuestions.html")) return;
+
+  const questionContainer = document.querySelector(".question-container");
+  const difficultyContainer = document.querySelector(".difficulty");
+  const contentContainer = document.querySelector(".quiz-content");
+
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+
+  let questions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let userResults = [];
+
+  if (!category) {
+    questionContainer.textContent = "No category selected.";
+    return;
   }
- async function fetchQuestionData(category) {
+
+  fetchQuestionData(category);
+
+  async function fetchQuestionData(category) {
     try {
       console.log("📡 Fetching questions for category:", category);
       const options = {
@@ -41,7 +53,8 @@
       questionContainer.textContent = "Error loading question.";
     }
   }
-   function renderQuestion(q) {
+
+  function renderQuestion(q) {
     if (!q) {
       console.error("⚠️ Tried to render undefined question at index:", currentIndex);
       return;
@@ -142,35 +155,4 @@
     const resultsPath = window.location.pathname.replace("mainQuestions.html", "results.html");
     window.location.href = resultsPath.includes("results.html") ? resultsPath : "/client/pages/results.html";
   }
-  
-document.addEventListener("DOMContentLoaded", () => {
-  if (!window.location.pathname.includes("mainQuestions.html")) return;
-
-  const questionContainer = document.querySelector(".question-container");
-  const difficultyContainer = document.querySelector(".difficulty");
-  const contentContainer = document.querySelector(".quiz-content");
-
-  const params = new URLSearchParams(window.location.search);
-  const category = params.get("category");
-
-  let questions = [];
-  let currentIndex = 0;
-  let score = 0;
-  let userResults = [];
-
-  if (!category) {
-    questionContainer.textContent = "No category selected.";
-    return;
-  }
-
-  fetchQuestionData(category);
 });
-
-if (typeof module !== "undefined") {
-  module.exports = {
-    fetchQuestionData,
-    renderQuestion,
-    checkAnswer,
-    showResults,
-  };
-}

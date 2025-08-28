@@ -1,6 +1,6 @@
 require("dotenv").config();
 const fs = require("fs");
-const db = require("./connect");
+const { db } = require("./connect");
 const sql = fs.readFileSync("./server/db/miamy.sql").toString();
 
 db.query(sql)

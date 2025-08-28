@@ -1,4 +1,4 @@
-const db = require("../../../db/connect");
+const { db } = require("../../../db/connect");
 const User = require("../../../models/User");
 const bcrypt = require("bcrypt");
 
