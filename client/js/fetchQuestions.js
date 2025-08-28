@@ -1,14 +1,3 @@
-// --- Logout button ---
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("token"); // remove JWT
-      alert("You have been logged out.");
-      window.location.assign("index.html"); // redirect to login page
-    });
-  }
-
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.location.pathname.includes("mainQuestions.html")) return;
 
@@ -22,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let questions = [];
   let currentIndex = 0;
   let score = 0;
+  let userResults = [];
 
   if (!category) {
     questionContainer.textContent = "No category selected.";
@@ -34,12 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log("📡 Fetching questions for category:", category);
       const options = {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
+        headers: { Authorization: localStorage.getItem("token") },
       };
-
-      console.log(`http://localhost:3000/questions/subject/${category}`);
 
       const resp = await fetch(
         `http://localhost:3000/questions/subject/${category}`,
@@ -47,10 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       console.log("Response status:", resp.status);
-
-      if (!resp.ok) {
-        throw new Error("API request failed");
-      }
+      if (!resp.ok) throw new Error(`API request failed (${resp.status})`);
 
       const data = await resp.json();
       console.log("Raw API response:", data);
@@ -73,19 +56,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderQuestion(q) {
     if (!q) {
-      console.error(
-        "⚠️ Tried to render undefined question at index:",
-        currentIndex
-      );
+      console.error("⚠️ Tried to render undefined question at index:", currentIndex);
       return;
     }
 
     questionContainer.textContent = q.question ?? "⚠️ Missing question text";
     difficultyContainer.textContent = `Difficulty: ${q.difficulty ?? "N/A"}`;
 
-    const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(
-      Boolean
-    );
+    const options = [q.answer, q.optionone, q.optiontwo, q.optionthree].filter(Boolean);
 
     if (options.length === 0) {
       console.error("⚠️ No options found for question:", q);
@@ -98,13 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
     contentContainer.innerHTML = "";
     options.forEach((opt) => {
       const btn = document.createElement("button");
-      const answers = document.getElementsByClassName("option-btn");
-
       btn.classList.add("option-btn", "btn-outline-primary", "btn", "m-1");
-      // "btn", "btn-outline-primary", "m-1"
       btn.textContent = opt;
 
       btn.addEventListener("click", () => {
+        contentContainer.querySelectorAll("button").forEach((b) => {b.disabled = true;});
         checkAnswer(opt, q.answer, btn);
       });
 
@@ -113,6 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function checkAnswer(selected, correct, btn) {
+    userResults.push({
+      index: currentIndex,
+      question: questions[currentIndex]?.question ?? "",
+      selected,
+      correct,
+      isCorrect: selected === correct,
+    });
+
     if (selected === correct) {
       score++;
       console.log("✅ Correct! Score:", score);
@@ -123,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.remove("btn-outline-primary");
       btn.classList.add("btn-danger");
     }
+
     setTimeout(() => {
       currentIndex++;
       if (currentIndex < questions.length) {
@@ -133,10 +118,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   }
 
-  //Results at end of quiz n
   function showResults() {
-    questionContainer.textContent = "🎉 Quiz Finished!";
-    difficultyContainer.textContent = "";
-    contentContainer.innerHTML = `<p>Your final score is: ${score} / ${questions.length}</p>`;
+    try {
+      const payload = { category, score, total: questions.length, userResults };
+      localStorage.setItem("quizResults", JSON.stringify(payload));
+    } catch (e) {
+      console.error("Could not save quiz results to localStorage:", e);
+    }
+    const resultsPath = window.location.pathname.replace("mainQuestions.html", "results.html");
+    window.location.href = resultsPath.includes("results.html") ? resultsPath : "/client/pages/results.html";
   }
 });
