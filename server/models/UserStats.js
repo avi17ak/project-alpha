@@ -13,16 +13,6 @@ class Userstats {
         this.totaltime = totaltime
     }
 
-    // static async getUserStatsById(id) {
-        
-    //     const response = await db.query('SELECT*  FROM userstats WHERE userid = ($1);', [id])
-
-    //     if (response.rows.length != 1) {
-    //         throw new Error("Unable to retrieve userstats.")
-    //     } else {
-    //         return new Userstats(response.rows[0])
-    //     }
-    // }
 
     static async getUserStatsByUsername(username) {
         
