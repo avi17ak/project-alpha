@@ -67,29 +67,30 @@ class User {
   }
 
   async updateUser(data) {
-    const { name, email, password, username } = data;
-
+    const {name, email, password, username} = data
+    
     //salt and encrypt
+    let encrypted_password = null
+    if(password){
     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
-    const encrypted_password = await bcrypt.hash(password, salt);
-    try {
-      const response = await db.query(
-        `UPDATE users SET
+    encrypted_password = await bcrypt.hash(password, salt);
+    }
+    try{
+      const response = await db.query(`UPDATE users SET
         name = COALESCE($1, name),
         email = COALESCE($2, email),
         password = COALESCE($3, password),
         username = COALESCE($4, username)
         WHERE userid = $5
-        RETURNING *;`,
-        [name, email, encrypted_password, username, this.userid]
-      );
+        RETURNING *;`, [name, email, encrypted_password, username, this.userid])
+        
+        if (response.rows.length !== 1) {
+              throw new Error('Unable to update the user details')
+          } else {
+              return new User(response.rows[0])
+          }
 
-      if (response.rows.length !== 1) {
-        throw new Error("Unable to update the user details");
-      } else {
-        return new User(response.rows[0]);
-      }
-    } catch (err) {
+    }catch(err) {
       if (err.code === "23505") {
         throw new Error("Email or username already exists");
       } else {

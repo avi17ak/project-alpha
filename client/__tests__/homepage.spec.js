@@ -1,62 +1,82 @@
-const { renderDOM } = require('..js/homepage');
+const { renderDOM } = require('./helpers');
 
 let dom;
 let document;
 
 describe('homepage.html', () => {
   beforeEach(async () => {
-    dom = await renderDOM('./homepage.html');
+    dom = await renderDOM('./client/pages/homepage.html');
     document = await dom.window.document;
-  })
+  });
 
-  it('has 4 buttons', () => {
-    const buttons = document.querySelectorAll('button')
-    expect(buttons.length).toBe(5)
-    expect(buttons[0].innerHTML).toBe(" Geography")
-    expect(buttons[1].innerHTML).toBe("History")
-    expect(buttons[2].innerHTML).toBe("Spanish")
-    expect(buttons[3].innerHTML).toBe("Music")
-    expect(buttons[4].innerHTML).toBe("Random")
-})
+  it('has 4 subject buttons', () => {
+    const buttons = document.querySelectorAll('.subject-btn');
+    expect(buttons.length).toBe(4);
 
-  it('h1 is empty when website loads', () => {
-    const h1 = document.querySelector('h1')
-    expect(h1).toBeTruthy
-    expect(h1.innerHTML).toContain('Homepage')
-  })
+    const categories = Array.from(buttons).map(btn => btn.dataset.category);
+    expect(categories).toEqual(expect.arrayContaining(['GEO', 'HIS', 'SPA', 'MUS']));
+  });
 
-  xit('displays morning when the btn is clicked', () => {
-    const btn = document.querySelector('button')
-    btn.click();
-    const h1 = document.querySelector('h1')
-    expect(h1.innerHTML).toContain('morning')
-  })
+  it('has a random button', () => {
+    const randomBtn = document.querySelector('.random-btn');
+    expect(randomBtn).toBeTruthy();
+    expect(randomBtn.dataset.category).toBe('RAN');
+  });
 
-  xit('displays dark mode', () => {
-    const body = document.querySelector('body')
-    const darkModeBtn = document.querySelector('#dark-mode')
+  it('has a header with Homepage text', () => {
+    const h1 = document.querySelector('header h1');
+    expect(h1).toBeTruthy();
+    expect(h1.innerHTML).toBe('Homepage');
+  });
 
-    darkModeBtn.click()
-    expect(body.className).toBe('dark-mode')
-  })
+  it('has a user dropdown menu with Account and Log out links', () => {
+    const dropdown = document.querySelector('#userDropdown');
+    expect(dropdown).toBeTruthy();
 
-  xit('adds the input value to the h1', () => {
-    const form = document.querySelector('form')
-    const h1 = document.querySelector('h1')
-  
-    const input = document.querySelector('#name')
-    input.value = 'emile'
-    form.dispatchEvent(new dom.window.Event('submit'));
-  
-    expect(h1.innerHTML).toContain(input.value)
-  })
+    const accountLink = document.querySelector('.dropdown-item[href="accountpage.html"]');
+    const logoutLink = document.querySelector('#logoutBtn');
+    expect(accountLink).toBeTruthy();
+    expect(logoutLink).toBeTruthy();
+    expect(logoutLink.getAttribute('href')).toBe('index.html');
+  });
 
-  xit('switches back to light mode', () => {
-    const body = document.querySelector('body')
-    const darkModeBtn = document.querySelector('#dark-mode')
+  it('geo button simulate a subject button click with data category geo', () => {
+    const geoBtn = document.querySelector('.subject-btn[data-category="GEO"]');
+    expect(geoBtn).toBeTruthy();
 
-    darkModeBtn.click()
-    darkModeBtn.click()
-    expect(body.className).toBe('')
-  })
-})
+    geoBtn.click();
+    expect(geoBtn.dataset.category).toBe('GEO');
+  });
+
+  it('history button simulate a subject button click with data category HIS', () => {
+    const historyBtn = document.querySelector('.subject-btn[data-category="HIS"]');
+    expect(historyBtn).toBeTruthy();
+
+    historyBtn.click();
+    expect(historyBtn.dataset.category).toBe('HIS');
+  });
+  it('spanish button simulate a subject button click with data category SPA', () => {
+    const spanishBtn = document.querySelector('.subject-btn[data-category="SPA"]');
+    expect(spanishBtn).toBeTruthy();
+
+    spanishBtn.click();
+    expect(spanishBtn.dataset.category).toBe('SPA');
+  });
+  it('music button simulate a subject button click with data category MUS', () => {
+    const musicBtn = document.querySelector('.subject-btn[data-category="MUS"]');
+    expect(musicBtn).toBeTruthy();
+
+    musicBtn.click();
+    expect(musicBtn.dataset.category).toBe('MUS');
+
+  });
+
+  it('random button simulate a random button click with data category RAN', () => {
+    const randomBtn = document.querySelector('.random-btn');
+    expect(randomBtn).toBeTruthy();
+
+    randomBtn.click();
+    expect(randomBtn.dataset.category).toBe('RAN');
+  });
+
+});
