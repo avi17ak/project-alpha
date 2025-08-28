@@ -7,6 +7,10 @@ describe('homepage.html', () => {
   beforeEach(async () => {
     dom = await renderDOM('./client/pages/homepage.html');
     document = await dom.window.document;
+
+    //Need to mock this so it doesn't throw error window.location.assign 
+    delete dom.window.location;
+    dom.window.location = { assign: jest.fn() };
   });
 
   it('has 4 subject buttons', () => {
