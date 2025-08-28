@@ -9,9 +9,9 @@ describe('homepage.html', () => {
     document = await dom.window.document;
   });
 
-  it('has subject buttons', () => {
+  it('has 4 subject buttons', () => {
     const buttons = document.querySelectorAll('.subject-btn');
-    expect(buttons.length).toBeGreaterThan(0);
+    expect(buttons.length).toBe(4);
 
     const categories = Array.from(buttons).map(btn => btn.dataset.category);
     expect(categories).toEqual(expect.arrayContaining(['GEO', 'HIS', 'SPA', 'MUS']));
@@ -40,11 +40,43 @@ describe('homepage.html', () => {
     expect(logoutLink.getAttribute('href')).toBe('index.html');
   });
 
-  it('can simulate a subject button click', () => {
+  it('geo button simulate a subject button click with data category geo', () => {
     const geoBtn = document.querySelector('.subject-btn[data-category="GEO"]');
     expect(geoBtn).toBeTruthy();
 
     geoBtn.click();
     expect(geoBtn.dataset.category).toBe('GEO');
   });
+
+  it('history button simulate a subject button click with data category HIS', () => {
+    const historyBtn = document.querySelector('.subject-btn[data-category="HIS"]');
+    expect(historyBtn).toBeTruthy();
+
+    historyBtn.click();
+    expect(historyBtn.dataset.category).toBe('HIS');
+  });
+  it('spanish button simulate a subject button click with data category SPA', () => {
+    const spanishBtn = document.querySelector('.subject-btn[data-category="SPA"]');
+    expect(spanishBtn).toBeTruthy();
+
+    spanishBtn.click();
+    expect(spanishBtn.dataset.category).toBe('SPA');
+  });
+  it('music button simulate a subject button click with data category MUS', () => {
+    const musicBtn = document.querySelector('.subject-btn[data-category="MUS"]');
+    expect(musicBtn).toBeTruthy();
+
+    musicBtn.click();
+    expect(musicBtn.dataset.category).toBe('MUS');
+
+  });
+
+  it('random button simulate a random button click with data category RAN', () => {
+    const randomBtn = document.querySelector('.random-btn');
+    expect(randomBtn).toBeTruthy();
+
+    randomBtn.click();
+    expect(randomBtn.dataset.category).toBe('RAN');
+  });
+
 });
