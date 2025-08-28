@@ -18,6 +18,8 @@ The management team of the Hive group of secondary schools has noticed a lack of
 Our solution brings interactivty and learning together. The all-in-one quiz application focuses on quiz-based learning that allows students to focus on the lesser and more overlooked non-stem subjects such as geography, history etc. This engages students whilst also allowing them to see the fun in non-stem subjects.
 
 ## Stakeholder and Solutions analysis
+
+### Stakeholder Analysis
 ![Stakeholder Analysis](./images/Stakeholder_analysis.png)
 
 | Stakeholder | Description | Reason |
@@ -27,6 +29,7 @@ Our solution brings interactivty and learning together. The all-in-one quiz appl
 | Devs | People building the applications and software | They fall just inside 'actively engaged' due to their interest in the application but also their influence in the direction it goes. They are the people who will build, test and deploy the application to the best ability. |
 | Government | In control of the government in the specific country | They are in the 'keep satisfied' region due to them being the overseers of anything education related. They have immense power with what can and can't be done in the country, but may not have as much interest due to an already formulated education syllabus. |
 
+### Solutions Diagram
 ![Solutions Diagram](./images/Solution%20Diagram.png)
 
 The Quiz system is the main system. The database feeds information and acts as a connection point towards the entire system. Teacher portals wil be able to manage and control the quiz sytem, whilst quiz templates are naturally generated from the information from the database.
