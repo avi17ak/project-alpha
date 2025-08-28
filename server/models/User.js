@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const db = require("../db/connect");
 
 class User {
@@ -40,6 +42,28 @@ class User {
     const newId = response.rows[0].userid;
     const newUser = await User.getOneById(newId);
     return newUser;
+  }
+
+  async updateUser(data) {
+    const {name, email, password, username} = data
+
+    //salt and encrypt
+    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+    const encrypted_password = await bcrypt.hash(password, salt);
+
+    const response = await db.query(`UPDATE users SET
+      name = COALESCE($1, name),
+      email = COALESCE($2, email),
+      password = COALESCE($3, password),
+      username = COALESCE($4, username)
+      WHERE userid = $5
+      RETURNING *;`, [name, email, encrypted_password, username, this.userid])
+    
+    if (response.rows.length !== 1) {
+            throw new Error('Unable to update the user details')
+        } else {
+            return new User(response.rows[0])
+        }
   }
 }
 

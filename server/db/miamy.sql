@@ -6,16 +6,17 @@ CREATE TABLE
     users (
         userid INT GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        username VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL UNIQUE,
         PRIMARY KEY (userId)
     );
 
 CREATE TABLE
-    userStats (
+    userstats (
         userstatsid INT GENERATED ALWAYS AS IDENTITY,
-        userid INT,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        userid INT NOT NULL,
         overallpercentage DECIMAL(4, 2) DEFAULT 0,
         geographycorrect INT DEFAULT 0,
         musiccorrect INT DEFAULT 0,
