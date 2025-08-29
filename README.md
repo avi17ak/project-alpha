@@ -7,7 +7,7 @@
 [Avkaran](https://github.com/avi17ak),
 [Israel](https://github.com/b1uuye)
 
-## Problem Statement & Solution
+## Problem Statement
 
 The management team of the Hive group of secondary schools has noticed a lack of engagement in non-STEM subjects over the last two years. They would like to try and reverse this trend and have asked an external team to come up with a solution that places student enjoyment at the heart of the learning experience.
 
@@ -55,15 +55,15 @@ Questions table exists on its own as it is purely for storing all the relevant q
 | Name | Wireframe | Design | 
 | --- | --- | --- |
 | Login Page | ![login page wireframe](./images/wireframes/login_page.png) | ![login page design](./images/designs/Login%20page.png) |
-| Login Page | ![login page wireframe](./images/wireframes/sign_up_page.png) | ![login page design](./images/designs/Sign%20up%20Page.png) |
-| Login Page | ![login page wireframe](./images/wireframes/homepage.png) | ![login page design](./images/designs/Home%20page.png) |
-| Login Page | ![login page wireframe](./images/wireframes/main_question_page.png) | ![login page design](./images/designs/Main%20questions%20page.png) |
-| Login Page | ![login page wireframe](./images/wireframes/account_page.png) | ![login page design](./images/designs/Account%20page.png) |
-| Login Page | ![login page wireframe](./images/wireframes/change_pass_page.png) | ![login page design](./images/designs/Change%20Password.png) |
+| Sign Up Page| ![login page wireframe](./images/wireframes/sign_up_page.png) | ![login page design](./images/designs/Sign%20up%20Page.png) |
+| Home Page | ![login page wireframe](./images/wireframes/homepage.png) | ![login page design](./images/designs/Home%20page.png) |
+| Main Question Page | ![login page wireframe](./images/wireframes/main_question_page.png) | ![login page design](./images/designs/Main%20questions%20page.png) |
+| Account Page | ![login page wireframe](./images/wireframes/account_page.png) | ![login page design](./images/designs/Account%20page.png) |
+| Change Information Page | ![login page wireframe](./images/wireframes/change_pass_page.png) | ![login page design](./images/designs/Change%20Password.png) |
 
 
 
 ## Getting Started
-[Backend Setup](https://github.com/avi17ak/project-alpha/tree/main/server)
+[Backend Setup⚙️](https://github.com/avi17ak/project-alpha/tree/main/server)
 
-[Frontend Setup](https://github.com/avi17ak/project-alpha/tree/main/client)
+[Frontend Setup🖥️](https://github.com/avi17ak/project-alpha/tree/main/client)
